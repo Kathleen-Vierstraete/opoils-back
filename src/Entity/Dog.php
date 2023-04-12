@@ -45,12 +45,12 @@ class Dog
     private $member;
 
     /**
-     * @ORM\OneToMany(targetEntity=picture::class, mappedBy="dog")
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="dog")
      */
     private $pictures;
 
     /**
-     * @ORM\OneToMany(targetEntity=hobby::class, mappedBy="dog")
+     * @ORM\OneToMany(targetEntity=Hobby::class, mappedBy="dog")
      */
     private $hobbies;
 

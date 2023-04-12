@@ -78,7 +78,7 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     private $picture;
 
     /**
-     * @ORM\OneToMany(targetEntity=dog::class, mappedBy="member")
+     * @ORM\OneToMany(targetEntity=Dog::class, mappedBy="member")
      */
     private $dogs;
 

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Member index{% endblock %}
+
+{% block body %}
+    <h1>Member index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Password</th>
+                <th>Lastname</th>
+                <th>Firstname</th>
+                <th>Username</th>
+                <th>Phone</th>
+                <th>Adress</th>
+                <th>Postal_code</th>
+                <th>City</th>
+                <th>Picture</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for member in members %}
+            <tr>
+                <td>{{ member.id }}</td>
+                <td>{{ member.email }}</td>
+                <td>{{ member.roles ? member.roles|json_encode : '' }}</td>
+                <td>{{ member.password }}</td>
+                <td>{{ member.lastname }}</td>
+                <td>{{ member.firstname }}</td>
+                <td>{{ member.username }}</td>
+                <td>{{ member.phone }}</td>
+                <td>{{ member.adress }}</td>
+                <td>{{ member.postalCode }}</td>
+                <td>{{ member.city }}</td>
+                <td>{{ member.picture }}</td>
+                <td>
+                    <a href="{{ path('app_back_member_show', {'id': member.id}) }}">show</a>
+                    <a href="{{ path('app_back_member_edit', {'id': member.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="13">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_back_member_new') }}">Create new</a>
+{% endblock %}
