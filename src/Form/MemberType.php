@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class MemberType extends AbstractType
 {
@@ -34,7 +34,7 @@ class MemberType extends AbstractType
                 ],
                 ])
 
-            ->add('password', TextType::class, [
+            ->add('password', PasswordType::class, [
                 'help' => 'Make sure it\'s at least 8 characters including a number and a lowercase letter and a special character.',
                 'constraints' => [
                     new Regex('/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-+]).{8,}$/'),
