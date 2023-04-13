@@ -3,9 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Member;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -34,40 +37,72 @@ class MemberType extends AbstractType
                 ],
                 ])
 
-            ->add('password', PasswordType::class, [
-                'help' => 'Make sure it\'s at least 8 characters including a number and a lowercase letter and a special character.',
-                'constraints' => [
-                    new Regex('/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-+]).{8,}$/'),
-                ]
-            ])
+            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+                // On récupère le form depuis l'event (pour travailler avec)
+                $form = $event->getForm();
+                // On récupère le user mappé sur le form depuis l'event
+                $user = $event->getData();
+    
+                // On conditionne le champ "password"
+                // Si user existant, il a id non null
+                if ($user->getId() !== null) {
+                    // Edit
+                    $form->add('password', null, [
+                        // Pour le form d'édition, on n'associe pas le password à l'entité
+                        // @link https://symfony.com/doc/current/reference/forms/types/form.html#mapped
+                        'mapped' => false,
+                        'attr' => [
+                            'placeholder' => 'Laissez vide si inchangé'
+                        ]
+                    ]);
+                } else {
+                    // New
+                    $form->add('password', null, [
+                        // En cas d'erreur du type
+                        // Expected argument of type "string", "null" given at property path "password".
+                        // (notamment à l'edit en cas de passage d'une valeur existante à vide)
+                        'empty_data' => '',
+                        // On déplace les contraintes de l'entité vers le form d'ajout
+                        'constraints' => [
+                            new NotBlank(),
+                            new Regex(
+                                "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/",
+                                "Le mot de passe doit contenir au minimum 8 caractères, une majuscule, un chiffre et un caractère spécial"
+                            ),
+                        ],
+                    ]);
+                }
+            })
+
 
             ->add('lastname', TextType::class, [
-                'label' => 'votre nom',
+                'label' => 'Votre nom',
             ])
 
             ->add('firstname', TextType::class, [
-                'label' => 'votre prénom',
+                'label' => 'Votre prénom',
             ])
 
             ->add('username', TextType::class, [
-                'label' => 'votre pseudo',
+                'label' => 'Votre pseudo',
             ])
 
             ->add('phone', TextType::class, [
-                'label' => 'votre numéro de téléphone',
+                'label' => 'Votre numéro de téléphone',
             ])
 
             ->add('adress', TextType::class, [
-                'label' => 'votre adresse postale',
+                'label' => 'Votre adresse postale',
             ])
             ->add('postal_code', TextType::class, [
-                'label' => 'votre code postal',
+                'label' => 'Votre code postal',
             ])
             ->add('city', TextType::class, [
-                'label' => 'votre ville',
+                'label' => 'Votre ville',
             ])
             ->add('picture', FileType::class, [
-                'label' => 'votre photo de profil',
+                'label' => 'Votre photo de profil',
+                'mapped' => false,
             ])
         ;
     }

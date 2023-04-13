@@ -70,15 +70,20 @@ class MemberController extends AbstractController
     public function edit(Request $request, Member $member, MemberRepository $memberRepository, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $form = $this->createForm(MemberType::class, $member);
+        //dd($form);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            //hashing the password beforehead
-            $hashedPassword = $userPasswordHasher->hashPassword($member , $member->getPassword());
+            $newPassword = $form->get('password')->getData();
 
-            //defining the member's password with the hashed password
-            $member->setPassword($hashedPassword);
+            //dd($newPassword);
+
+            //if there is a password, we hash it and put it in $member
+            if ($newPassword !== null) {
+                $hashedPassword = $userPasswordHasher->hashPassword($member, $newPassword);
+                $member->setPassword($hashedPassword);
+            }
 
             $memberRepository->add($member, true);
 
@@ -90,6 +95,7 @@ class MemberController extends AbstractController
             'form' => $form,
         ]);
     }
+
 
     /**
      * @Route("/{id}", name="app_back_member_delete", methods={"POST"})
