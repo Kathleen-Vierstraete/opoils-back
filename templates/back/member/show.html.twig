@@ -1,9 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'back/base_back.html.twig' %}
 
 {% block title %}Member{% endblock %}
 
 {% block body %}
-    <h1>Member</h1>
+    <h1>Fiche membre</h1>
 
     <table class="table">
         <tbody>
@@ -16,7 +16,7 @@
                 <td>{{ member.email }}</td>
             </tr>
             <tr>
-                <th>Roles</th>
+                <th>Rôle</th>
                 <td>{{ member.roles ? member.roles|json_encode : '' }}</td>
             </tr>
             {# <tr>
@@ -24,43 +24,47 @@
                 <td>{{ member.password }}</td>
             </tr> #}
             <tr>
-                <th>Lastname</th>
+                <th>Nom de famille</th>
                 <td>{{ member.lastname }}</td>
             </tr>
             <tr>
-                <th>Firstname</th>
+                <th>Prénom</th>
                 <td>{{ member.firstname }}</td>
             </tr>
             <tr>
-                <th>Username</th>
+                <th>Email de connexion</th>
                 <td>{{ member.username }}</td>
             </tr>
             <tr>
-                <th>Phone</th>
+                <th>Pseudo</th>
+                <td>{{ member.pseudo }}</td>
+            </tr>            
+            <tr>
+                <th>Téléphone</th>
                 <td>{{ member.phone }}</td>
             </tr>
             <tr>
-                <th>Adress</th>
+                <th>Adresse</th>
                 <td>{{ member.adress }}</td>
             </tr>
             <tr>
-                <th>Postal_code</th>
+                <th>Code postal</th>
                 <td>{{ member.postalCode }}</td>
             </tr>
             <tr>
-                <th>City</th>
+                <th>Ville</th>
                 <td>{{ member.city }}</td>
             </tr>
             <tr>
-                <th>Picture</th>
+                <th>Photo de profil</th>
                 <td>{{ member.picture }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_back_member_index') }}">back to list</a>
+    <a class="btn btn-warning float-end" href="{{ path('app_back_member_index') }}">Retour à la liste</a>
 
-    <a href="{{ path('app_back_member_edit', {'id': member.id}) }}">edit</a>
+    <a class="btn btn-secondary m-1" href="{{ path('app_back_member_edit', {'id': member.id}) }}">Editer</a>
 
     {{ include('back/member/_delete_form.html.twig') }}
 {% endblock %}

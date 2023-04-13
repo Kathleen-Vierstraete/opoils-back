@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block subnav %}
+
+<ul class="nav navbar-light mb-3" style="background-color: #65482E;"> 
+    <li class="nav-item">
+        <a class="nav-link text-white" href="#">O'Poils</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-white" href="#">Back</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-white" href="{{ path('app_back_member_index') }}">Membres</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-white" href="#">Chiens</a>
+    </li>
+</ul>
+
+{% endblock %}
+

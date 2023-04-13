@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'back/base_back.html.twig' %}
 
 {% block title %}Editer le membre{% endblock %}
 
@@ -7,7 +7,7 @@
 
     {{ include('back/member/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    <a class="btn btn-primary float-end" href="{{ path('app_back_member_index') }}">Retour à la liste</a>
+    <a class="btn btn-warning float-end" href="{{ path('app_back_member_index') }}">Retour à la liste</a>
 
     {{ include('back/member/_delete_form.html.twig') }}
 {% endblock %}

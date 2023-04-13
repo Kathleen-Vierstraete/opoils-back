@@ -19,7 +19,10 @@
     <title>{% block title %}Welcome{% endblock %} - O'Poils</title>
 </head>
     <body>
-        <div class="container-fluid">
+    {% block subnav %}{% endblock %}
+    <div class="container-fluid my-3">
+        <div class="row">
+            <div class="col mx-5">
             {% block body %}{% endblock %}
         </div>
     </body>

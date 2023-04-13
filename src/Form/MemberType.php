@@ -74,7 +74,6 @@ class MemberType extends AbstractType
                 }
             })
 
-
             ->add('lastname', TextType::class, [
                 'label' => 'Votre nom',
             ])
@@ -84,7 +83,7 @@ class MemberType extends AbstractType
             ])
 
             ->add('username', TextType::class, [
-                'label' => 'Votre pseudo',
+                'label' => 'Votre mail de connexion',
             ])
 
             ->add('phone', TextType::class, [
@@ -103,6 +102,9 @@ class MemberType extends AbstractType
             ->add('picture', FileType::class, [
                 'label' => 'Votre photo de profil',
                 'mapped' => false,
+            ])
+            ->add('pseudo', TextType::class, [
+                'label' => 'Votre pseudo',
             ])
         ;
     }

@@ -96,6 +96,12 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $dogs;
 
+    /**
+     * @ORM\Column(type="string", length=35)
+     * @Groups({"get_members_collection"})
+     */
+    private $Pseudo;
+
     public function __construct()
     {
         $this->dogs = new ArrayCollection();
@@ -126,6 +132,7 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
+        // A VOIR L'AFFICHAGE DE L'USERNAME PAR APPORT A L'EMAIL ET AU CHOIX DE L'IDENTIFIANT DE CONNEXION
     }
 
     /**
@@ -134,6 +141,7 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUsername(): string
     {
         return (string) $this->email;
+        // A VOIR L'AFFICHAGE DE L'USERNAME PAR APPORT A L'EMAIL ET AU CHOIX DE L'IDENTIFIANT DE CONNEXION
     }
 
     /**
@@ -307,6 +315,18 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
                 $dog->setMember(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->Pseudo;
+    }
+
+    public function setPseudo(string $Pseudo): self
+    {
+        $this->Pseudo = $Pseudo;
 
         return $this;
     }

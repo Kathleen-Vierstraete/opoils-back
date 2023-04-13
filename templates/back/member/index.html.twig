@@ -1,26 +1,27 @@
-{% extends 'base.html.twig' %}
+{% extends 'back/base_back.html.twig' %}
 
-{% block title %}Member index{% endblock %}
+{% block title %}Liste des membres{% endblock %}
 
 {% block body %}
-    <h1>Member index</h1>
+    <h1>Liste des membres</h1>
 
-    <table class="table">
-        <thead>
+    <table class="table table-hover ">
+        <thead class="table-warning">
             <tr>
                 <th>Id</th>
                 <th>Email</th>
-                <th>Roles</th>
+                <th>Rôle</th>
                 {# <th>Password</th> #}
-                <th>Lastname</th>
-                <th>Firstname</th>
-                <th>Username</th>
-                <th>Phone</th>
-                <th>Adress</th>
-                <th>Postal_code</th>
-                <th>City</th>
-                <th>Picture</th>
-                <th>actions</th>
+                <th>Nom de famille</th>
+                <th>Prénom</th>
+                {# <th>Username</th> #}
+                <th>Pseudo</th>
+                <th>Téléphone</th>
+                <th>Adresse</th>
+                <th>Code postal</th>
+                <th>Ville</th>
+                <th>Photo de profil</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -32,24 +33,26 @@
                 {# <td>{{ member.password }}</td> #}
                 <td>{{ member.lastname }}</td>
                 <td>{{ member.firstname }}</td>
-                <td>{{ member.username }}</td>
+                {# <td>{{ member.username }}</td> #}
+                <td>{{ member.pseudo }}</td>
                 <td>{{ member.phone }}</td>
                 <td>{{ member.adress }}</td>
                 <td>{{ member.postalCode }}</td>
                 <td>{{ member.city }}</td>
                 <td>{{ member.picture }}</td>
                 <td>
-                    <a href="{{ path('app_back_member_show', {'id': member.id}) }}">show</a>
-                    <a href="{{ path('app_back_member_edit', {'id': member.id}) }}">edit</a>
+                    <a class="btn btn-sm btn-info" href="{{ path('app_back_member_show', {'id': member.id}) }}">Voir</a> 
+                    <a class="btn btn-sm btn-secondary" href="{{ path('app_back_member_edit', {'id': member.id}) }}">Editer</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="13">no records found</td>
+                <td colspan="13">Aucun enregistrement trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_back_member_new') }}">Create new</a>
+    <a class="btn btn-warning" href="{{ path('app_back_member_new') }}">Ajouter un nouveau membre</a>
+
 {% endblock %}

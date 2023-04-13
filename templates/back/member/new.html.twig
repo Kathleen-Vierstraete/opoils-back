@@ -1,11 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'back/base_back.html.twig' %}
 
-{% block title %}New Member{% endblock %}
+{% block title %}Nouveau membre{% endblock %}
 
 {% block body %}
-    <h1>Create new Member</h1>
+    <h1>Création d'un nouveau membre</h1>
 
     {{ include('back/member/_form.html.twig') }}
 
-    <a href="{{ path('app_back_member_index') }}">back to list</a>
+    <a class="btn btn-warning float-end" href="{{ path('app_back_member_index') }}">Retour à la liste</a>
 {% endblock %}
