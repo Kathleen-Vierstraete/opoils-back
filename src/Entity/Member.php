@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=MemberRepository::class)
@@ -18,67 +19,80 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"get_members_collection"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"get_members_collection"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"get_members_collection"})
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Groups({"get_members_collection"})
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups({"get_members_collection"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups({"get_members_collection"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups({"get_members_collection"})
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=10, nullable=true)
+     * @Groups({"get_members_collection"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=150, nullable=true)
+     * @Groups({"get_members_collection"})
      */
     private $adress;
 
     /**
      * @ORM\Column(type="string", length=5)
+     * @Groups({"get_members_collection"})
      */
     private $postal_code;
 
     /**
      * @ORM\Column(type="string", length=35)
+     * @Groups({"get_members_collection"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"get_members_collection"})
      */
     private $picture;
 
     /**
      * @ORM\OneToMany(targetEntity=Dog::class, mappedBy="member")
+     * @Groups({"get_members_collection"})
      */
     private $dogs;
 

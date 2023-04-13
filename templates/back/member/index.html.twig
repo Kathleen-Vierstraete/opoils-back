@@ -11,7 +11,7 @@
                 <th>Id</th>
                 <th>Email</th>
                 <th>Roles</th>
-                <th>Password</th>
+                {# <th>Password</th> #}
                 <th>Lastname</th>
                 <th>Firstname</th>
                 <th>Username</th>
@@ -29,7 +29,7 @@
                 <td>{{ member.id }}</td>
                 <td>{{ member.email }}</td>
                 <td>{{ member.roles ? member.roles|json_encode : '' }}</td>
-                <td>{{ member.password }}</td>
+                {# <td>{{ member.password }}</td> #}
                 <td>{{ member.lastname }}</td>
                 <td>{{ member.firstname }}</td>
                 <td>{{ member.username }}</td>
