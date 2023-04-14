@@ -39,10 +39,11 @@
                 <td>{{ member.adress }}</td>
                 <td>{{ member.postalCode }}</td>
                 <td>{{ member.city }}</td>
-                <td>{{ member.picture }}</td>
+                <td><img src="{{ app.request.getBaseURL() }}/uploads/pictures/{{ member.picture }}" width="150px"></td>          
                 <td>
                     <a class="btn btn-sm btn-info" href="{{ path('app_back_member_show', {'id': member.id}) }}">Voir</a> 
                     <a class="btn btn-sm btn-secondary" href="{{ path('app_back_member_edit', {'id': member.id}) }}">Editer</a>
+                    {{ include('back/member/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}
