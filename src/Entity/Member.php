@@ -74,7 +74,7 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=5)
-     * @Groups({"get_members_collection"})
+     * @Groups({"get_members_collection", "get_dogs_collection"})
      */
     private $postal_code;
 
@@ -98,7 +98,7 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=35)
-     * @Groups({"get_members_collection"})
+     * @Groups({"get_members_collection", "get_dogs_collection"})
      */
     private $Pseudo;
 
@@ -140,7 +140,7 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string) $this->username;
         // A VOIR L'AFFICHAGE DE L'USERNAME PAR APPORT A L'EMAIL ET AU CHOIX DE L'IDENTIFIANT DE CONNEXION
     }
 

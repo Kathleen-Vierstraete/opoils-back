@@ -6,6 +6,8 @@ use App\Repository\DogRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=DogRepository::class)
@@ -16,31 +18,37 @@ class Dog
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"get_dogs_collection"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups({"get_dogs_collection", "get_members_collection"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="smallint")
+     * @Groups({"get_dogs_collection"})
      */
     private $age;
 
     /**
      * @ORM\Column(type="string", length=35)
+     * @Groups({"get_dogs_collection"})
      */
     private $race;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"get_dogs_collection"})
      */
     private $presentation;
 
     /**
      * @ORM\ManyToOne(targetEntity=Member::class, inversedBy="dogs")
+     * @Groups({"get_dogs_collection"})
      */
     private $member;
 

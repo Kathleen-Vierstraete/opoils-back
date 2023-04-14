@@ -38,7 +38,7 @@ class DogType extends AbstractType
                 'choice_label' => 'pseudo', 
                 //this is an array
                 'multiple' =>false,
-                // expanded true to have checkboxes
+                // expanded false to fit the entity and the cardinality
                 'expanded' => false,
             ])
         ;
