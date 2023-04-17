@@ -1,0 +1,46 @@
+{% extends 'back/base_back.html.twig' %}
+
+{% block title %}Listes des hobbies des chiens{% endblock %}
+
+{% block body %}
+    <h1>Listes des hobbies des chiens</h1><br>
+
+    <table class="table table-hover ">
+        <thead class="table-warning">
+            <tr>
+                <th>Id du chien</th>
+                <th>Nom du chien</th>
+                <th>Propriétaire</th>               
+                <th>Hobby</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for dog in dogs %}
+            <tr>
+                <td>{{ dog.id }}</td>
+                <td>{{ dog.name }}</td>
+                <td>{{ dog.member.pseudo }}</td>
+                <td>
+                {% for hobby in dog.hobbies %}
+                    <ul>
+                        <li> {{ hobby }}</li>
+                    </ul>
+                {% endfor %}
+                </td>                
+                <td>
+                    <a class="btn btn-sm btn-info" href="{{ path('app_back_dog_show', {'id': dog.id}) }}">Voir le profil du membre</a>
+
+                    <a class="btn btn-sm btn-info" href="{{ path('app_back_dog_show', {'id': dog.id}) }}">Voir le profil du chien</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Pas de hobbies enregistrés</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-warning" href="{{ path('app_back_dog_new') }}">Ajouter un nouveau hobby</a>
+{% endblock %}

@@ -4,6 +4,7 @@ namespace App\Controller\Back;
 
 use App\Entity\Dog;
 use App\Entity\Hobby;
+use App\Entity\Member;
 use App\Form\HobbyType;
 use App\Repository\HobbyRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,27 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
  */
 class HobbyController extends AbstractController
 {
+
+// TENTATIVE DE ROUTE HOBBIESLIST
+
+    /**
+     * @Route("/", name="app_back_hobby_list", methods={"GET"})
+     * @ParamConverter("dog", options={"mapping": {"dog_id" : "dog.id"}})
+     * @ParamConverter("dog", options={"mapping": {"dog_name" : "dog.name"}})
+     */
+    public function listHobbies(HobbyRepository $hobbyRepository, Dog $dog, Member $member): Response
+    {
+        return $this->render('back/hobby/list.html.twig', [
+            'hobbies' => $hobbyRepository->findAll(),
+            'dog' => $dog,
+            'member' => $member,
+        ]);
+    }
+    
+// FIN DE TENTATIVE DE ROUTE HOBBIESLIST 
+
+
+
     /**
      * @Route("/", name="app_back_hobby_index", methods={"GET"})
      */
