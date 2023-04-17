@@ -2,13 +2,14 @@
 
 namespace App\Controller\Back;
 
+use App\Entity\Dog;
 use App\Entity\Hobby;
 use App\Form\HobbyType;
 use App\Repository\HobbyRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/back/hobby")
@@ -22,6 +23,20 @@ class HobbyController extends AbstractController
     {
         return $this->render('back/hobby/index.html.twig', [
             'hobbies' => $hobbyRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * the hobbies of a dog in particular
+     * 
+     * @Route("/dog/{id<\d+>}", name="app_back_hobby_indexhobbies", methods={"GET"})
+     */
+    public function indexHobbies(HobbyRepository $hobbyRepository, Dog $dog): Response
+    {
+        return $this->render('back/hobby/index.html.twig', [
+            'hobbies' => $hobbyRepository->findByDog($dog),
+
+            'dog' => $dog,
         ]);
     }
 
@@ -59,7 +74,7 @@ class HobbyController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_back_hobby_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Hobby $hobby, HobbyRepository $hobbyRepository): Response
+    public function edit(Request $request, Hobby $hobby, HobbyRepository $hobbyRepository, Dog $dog): Response
     {
         $form = $this->createForm(HobbyType::class, $hobby);
         $form->handleRequest($request);
@@ -67,12 +82,13 @@ class HobbyController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $hobbyRepository->add($hobby, true);
 
-            return $this->redirectToRoute('app_back_hobby_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_back_hobby_indexhobbies', ['id' => $dog->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('back/hobby/edit.html.twig', [
             'hobby' => $hobby,
             'form' => $form,
+            'dog'=> $dog,
         ]);
     }
 

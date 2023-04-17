@@ -47,33 +47,34 @@ class DogType extends AbstractType
                 'label' => 'Propriétaire',
             ])
 
-/*             ->add('hobbies', TextType::class, [
+            // ->add('hobbies', TextType::class, [
                  //the related entity
-                 'class' => Hobby::class, 
+                //  'class' => Hobby::class, 
                  //we want to display the member's pseudo to link it to the dog
-                 'choice_label' => 'hobby', 
+                //  'choice_label' => 'hobby', 
+                //  'mapped' => false,
                  //this is an array
-                 'multiple' =>false,
+                //  'multiple' =>true,
                  // expanded false to fit the entity and the cardinality
-                 'expanded' => false,             
-                'label' => 'Les hobbys de votre chien',
-            ]) */
+                //  'expanded' => false,             
+            //     'label' => 'Les hobbys de votre chien',
+            // ]) 
 
-            ->add('pictures', FileType::class, [
-                'label' => 'Votre photo de profil',
-                'mapped' => false,
-                'required' => false,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'image/jpg',
-                            'image/jpeg',
-                        ],
-                        'mimeTypesMessage' => 'Merci de choisir un format d\'image valide',
-                    ])
-                ]
-            ])
+            // ->add('pictures', FileType::class, [
+            //     'label' => 'Votre photo de profil',
+            //     'mapped' => false,
+            //     'required' => false,
+            //     'constraints' => [
+            //         new File([
+            //             'maxSize' => '1024k',
+            //             'mimeTypes' => [
+            //                 'image/jpg',
+            //                 'image/jpeg',
+            //             ],
+            //             'mimeTypesMessage' => 'Merci de choisir un format d\'image valide',
+            //         ])
+            //     ]
+            // ])
         ;
     }
 

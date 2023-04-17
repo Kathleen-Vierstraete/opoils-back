@@ -3,6 +3,7 @@
 namespace App\Controller\Back;
 
 use App\Entity\Dog;
+use App\Entity\Hobby;
 use App\Form\DogType;
 use App\Repository\DogRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,38 +40,41 @@ class DogController extends AbstractController
 // GESTION FILES MEDIA
 
     /** @var UploadedFile $pictureFile */
-    $pictureFile = $form->get('pictures')->getData();
+    // $pictureFile = $form->get('pictures')->getData();
 
             // this condition is needed because the 'picture' field is not required
             // so the PDF file must be processed only when a file is uploaded
-            if ($pictureFile) {
-                $originalFilename = pathinfo($pictureFile->getClientOriginalName(), PATHINFO_FILENAME);
+            // if ($pictureFile) {
+            //     $originalFilename = pathinfo($pictureFile->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$pictureFile->guessExtension();    
+                // $safeFilename = $slugger->slug($originalFilename);
+                // $newFilename = $safeFilename.'-'.uniqid().'.'.$pictureFile->guessExtension();    
 
                 // Move the file to the directory where pictures are stored
-                try {
-                    $pictureFile->move(
-                        $this->getParameter('pictures_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
+                // try {
+                //     $pictureFile->move(
+                //         $this->getParameter('pictures_directory'),
+                //         $newFilename
+                //     );
+                // } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
-                    throw $e;
-                }
+                //     throw $e;
+                // }
 
                 // updates the 'pictureFilename' property to store the JPG file name
                 // instead of its contents
-                $dog->setPicture($newFilename);
-            }
+                // $dog->setPicture($newFilename);
+            // }
 
             // ... persist the $member variable or any other work
 
 // END FILES
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $dogRepository->add($dog, true);
+
+
 
             return $this->redirectToRoute('app_back_dog_index', [], Response::HTTP_SEE_OTHER);
         }

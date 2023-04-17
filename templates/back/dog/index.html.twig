@@ -40,6 +40,7 @@
                 <td>
                     <a class="btn btn-sm btn-info" href="{{ path('app_back_dog_show', {'id': dog.id}) }}">Voir</a>
                     <a class="btn btn-sm btn-secondary" href="{{ path('app_back_dog_edit', {'id': dog.id}) }}">Editer</a>
+                    <a class="btn btn-sm btn-success" href="{{ path('app_back_hobby_indexhobbies', {'id': dog.id}) }}">Hobbies</a>
                     {{ include('back/dog/_delete_form.html.twig') }}
                 </td>
             </tr>
