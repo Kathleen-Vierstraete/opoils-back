@@ -55,4 +55,8 @@ class Hobby
 
         return $this;
     }
+
+    public function __toString(){
+        return $this->hobby; // Remplacer champ par une propriété "string" de l'entité
+    }
 }
