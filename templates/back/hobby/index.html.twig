@@ -5,6 +5,8 @@
 {% block body %}
     <h1>Hobbies de {{ dog.name }}</h1>
 
+    <a href="{{ path('app_back_hobby_new', {id: dog.id}) }}">Create new</a>
+
     <table class="table">
         <thead>
             <tr>
@@ -22,8 +24,8 @@
                 <td>{{ hobby.hobby }}</td>
                 <td>{{ hobby.dog.name }}</td>
                 <td>
-                    <a href="{{ path('app_back_hobby_show', {'id': hobby.id}) }}">show</a>
-                    <a href="{{ path('app_back_hobby_edit', {'id': hobby.id}) }}">edit</a>
+                    <a href="{{ path('app_back_hobby_show', {'id': hobby.id, dog_id: dog.id}) }}">show</a>
+                    <a href="{{ path('app_back_hobby_edit', {'id': hobby.id, dog_id: dog.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -34,5 +36,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_back_hobby_new') }}">Create new</a>
 {% endblock %}

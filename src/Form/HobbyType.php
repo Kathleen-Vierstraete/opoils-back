@@ -18,17 +18,17 @@ class HobbyType extends AbstractType
             ->add('hobby', TextType::class, [
                 'label' => 'Le hobby de votre chien',
             ])
-            ->add('dog', EntityType::class, [
-                //the related entity
-                'class' => Dog::class, 
-                //we want to display the member's pseudo to link it to the dog
-                'choice_label' => 'name', 
-                //this is an array
-                'multiple' =>false,
-                // expanded false to fit the entity and the cardinality
-                'expanded' => false,
-                'label' => 'Nom du chien',
-            ])
+        //     ->add('dog', EntityType::class, [
+        //         //the related entity
+        //         'class' => Dog::class, 
+        //         //we want to display the member's pseudo to link it to the dog
+        //         'choice_label' => 'name', 
+        //         //this is an array
+        //         'multiple' =>false,
+        //         // expanded false to fit the entity and the cardinality
+        //         'expanded' => false,
+        //         'label' => 'Nom du chien',
+        //     ])
         ;
     }
 

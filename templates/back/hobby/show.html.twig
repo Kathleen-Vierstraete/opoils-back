@@ -18,9 +18,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_back_hobby_index') }}">back to list</a>
+    <a href="{{ path('app_back_hobby_indexhobbies', {'id': dog.id}) }}">back to list</a>
 
-    <a href="{{ path('app_back_hobby_edit', {'id': hobby.id}) }}">edit</a>
+    <a href="{{ path('app_back_hobby_edit', {'id': hobby.id, dog_id: dog.id}) }}">edit</a>
 
     {{ include('back/hobby/_delete_form.html.twig') }}
 {% endblock %}
