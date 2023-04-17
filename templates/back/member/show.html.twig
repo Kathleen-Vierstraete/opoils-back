@@ -1,6 +1,6 @@
 {% extends 'back/base_back.html.twig' %}
 
-{% block title %}Member{% endblock %}
+{% block title %}Membres{% endblock %}
 
 {% block body %}
     <h1>Fiche membre</h1>
@@ -57,7 +57,7 @@
             </tr>
             <tr>
                 <th>Photo de profil</th>
-                <td>{{ member.picture }}</td>
+                <td><img src="{{ app.request.getBaseURL() }}/uploads/pictures/{{ member.picture }}" width="150px"></td>
             </tr>
         </tbody>
     </table>

@@ -1,20 +1,22 @@
 {% extends 'back/base_back.html.twig' %}
 
-{% block title %}Dog index{% endblock %}
+{% block title %}Listes des chiens{% endblock %}
 
 {% block body %}
-    <h1>Dog index</h1>
+    <h1>Listes des chiens</h1><br>
 
-    <table class="table">
-        <thead>
+    <table class="table table-hover ">
+        <thead class="table-warning">
             <tr>
                 <th>Id</th>
-                <th>Name</th>
+                <th>Nom</th>
                 <th>Age</th>
                 <th>Race</th>
-                <th>Presentation</th>
-                <th>Owner</th>
-                <th>actions</th>
+                <th>Présentation</th>
+                <th>Propriétaire</th>
+                <th>Hobbys</th>
+                <th>Photo</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -26,19 +28,21 @@
                 <td>{{ dog.race }}</td>
                 <td>{{ dog.presentation }}</td>
                 <td>{{ dog.member.pseudo }}</td>
-
+                <td>{# {{ dog.hobby.hobby }} #}</td>
+                <td>{# {{ dog.picture.picture }} #}</td>
                 <td>
-                    <a href="{{ path('app_back_dog_show', {'id': dog.id}) }}">show</a>
-                    <a href="{{ path('app_back_dog_edit', {'id': dog.id}) }}">edit</a>
+                    <a class="btn btn-sm btn-info" href="{{ path('app_back_dog_show', {'id': dog.id}) }}">Voir</a>
+                    <a class="btn btn-sm btn-secondary" href="{{ path('app_back_dog_edit', {'id': dog.id}) }}">Editer</a>
+                    {{ include('back/dog/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">Pas de chiens enregistrés</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_back_dog_new') }}">Create new</a>
+    <a class="btn btn-warning" href="{{ path('app_back_dog_new') }}">Ajouter un nouveau chien</a>
 {% endblock %}

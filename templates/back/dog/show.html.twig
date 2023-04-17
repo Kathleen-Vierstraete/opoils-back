@@ -1,9 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'back/base_back.html.twig' %}
 
-{% block title %}Dog{% endblock %}
+{% block title %}Chiens{% endblock %}
 
 {% block body %}
-    <h1>Dog</h1>
+    <h1>Fiche chien</h1>
 
     <table class="table">
         <tbody>
@@ -12,7 +12,7 @@
                 <td>{{ dog.id }}</td>
             </tr>
             <tr>
-                <th>Name</th>
+                <th>Nom</th>
                 <td>{{ dog.name }}</td>
             </tr>
             <tr>
@@ -24,15 +24,28 @@
                 <td>{{ dog.race }}</td>
             </tr>
             <tr>
-                <th>Presentation</th>
+                <th>Présentation</th>
                 <td>{{ dog.presentation }}</td>
             </tr>
+            <tr>
+                <th>Propriétaire</th>
+                <td>{{ dog.member.pseudo }}</td>
+            </tr>
+            <tr>
+                <th>Hobbys</th>
+                <td>{# {{ dog.hobby.hobby }} #}</td>
+            </tr>
+            <tr>
+                <th>Photo</th>
+                <td>{# {{ dog.picture.picture }} #}</td>
+            </tr>
+            
         </tbody>
     </table>
 
-    <a href="{{ path('app_back_dog_index') }}">back to list</a>
+    <a class="btn btn-warning float-end" href="{{ path('app_back_dog_index') }}">Retour à la liste</a>
 
-    <a href="{{ path('app_back_dog_edit', {'id': dog.id}) }}">edit</a>
+    <a class="btn btn-secondary m-1" href="{{ path('app_back_dog_edit', {'id': dog.id}) }}">Editer</a>
 
     {{ include('back/dog/_delete_form.html.twig') }}
 {% endblock %}

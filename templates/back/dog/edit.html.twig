@@ -1,13 +1,13 @@
-{% extends 'base.html.twig' %}
+{% extends 'back/base_back.html.twig' %}
 
-{% block title %}Edit Dog{% endblock %}
+{% block title %}Editer le chien{% endblock %}
 
 {% block body %}
-    <h1>Edit Dog</h1>
+    <h1>Editer le chien</h1>
 
-    {{ include('back/dog/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('back/dog/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    <a href="{{ path('app_back_dog_index') }}">back to list</a>
+    <a class="btn btn-warning float-end" href="{{ path('app_back_dog_index') }}">Retour à la liste</a>
 
     {{ include('back/dog/_delete_form.html.twig') }}
 {% endblock %}
