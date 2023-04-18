@@ -53,12 +53,12 @@ class Dog
     private $member;
 
     /**
-     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="dog")
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="dog", cascade={"remove"})
      */
     private $pictures;
 
     /**
-     * @ORM\OneToMany(targetEntity=Hobby::class, mappedBy="dog")
+     * @ORM\OneToMany(targetEntity=Hobby::class, mappedBy="dog", cascade={"remove"})
      */
     private $hobbies;
 

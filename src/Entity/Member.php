@@ -91,7 +91,7 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     private $picture;
 
     /**
-     * @ORM\OneToMany(targetEntity=Dog::class, mappedBy="member")
+     * @ORM\OneToMany(targetEntity=Dog::class, mappedBy="member", cascade={"remove"})
      * @Groups({"get_members_collection"})
      */
     private $dogs;
