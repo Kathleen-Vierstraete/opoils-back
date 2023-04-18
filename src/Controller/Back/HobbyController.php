@@ -20,11 +20,11 @@ class HobbyController extends AbstractController
     /**
      * @Route("/", name="app_back_hobby_index", methods={"GET"})
      */
-    public function index(HobbyRepository $hobbyRepository, Dog $dog): Response
+    public function index(HobbyRepository $hobbyRepository): Response
     {
         return $this->render('back/hobby/index.html.twig', [
             'hobbies' => $hobbyRepository->findAll(),
-            'dog' => $dog,
+            // 'dog' => $dog,
         ]);
     }
 
