@@ -1,9 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'back/base_back.html.twig' %}
 
-{% block title %}Hobby{% endblock %}
+{% block title %}Hobby de {{ dog.name }}{% endblock %}
 
 {% block body %}
-    <h1>Hobby</h1>
+    <h1>Hobby de {{ dog.name }}</h1><br>
 
     <table class="table">
         <tbody>
@@ -18,9 +18,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_back_hobby_indexhobbies', {'id': dog.id}) }}">back to list</a>
+    <a class="btn btn-warning float-end" href="{{ path('app_back_hobby_indexhobbies', {'id': dog.id}) }}">Retour à la liste</a>
 
-    <a href="{{ path('app_back_hobby_edit', {'id': hobby.id, dog_id: dog.id}) }}">edit</a>
+    <a class="btn btn-secondary m-1" href="{{ path('app_back_hobby_edit', {'id': hobby.id, dog_id: dog.id}) }}">Editer</a>
 
     {{ include('back/hobby/_delete_form.html.twig') }}
 {% endblock %}

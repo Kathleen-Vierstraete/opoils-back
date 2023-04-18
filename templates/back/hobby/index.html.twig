@@ -3,17 +3,14 @@
 {% block title %}Hobbies Index{% endblock %}
 
 {% block body %}
-    {# <h1>Hobbies de {{ dog.name }}</h1> #}
+    <h1>Hobbies de {{ dog.name }}</h1>
 
-    {# <a href="{{ path('app_back_hobby_new', {id: dog.id}) }}">Create new</a> #}
-
-    <table class="table">
-        <thead>
+    <table class="table table-hover ">
+        <thead class="table-warning">
             <tr>
                 <th>Id</th>
-                <th>Hobby</th>
-                <th>Dog</th>
-                <th>actions</th>
+                <th>Hobbies</th>
+                <th>Actions</th>
 
             </tr>
         </thead>
@@ -22,18 +19,21 @@
             <tr>
                 <td>{{ hobby.id }}</td>
                 <td>{{ hobby.hobby }}</td>
-                <td>{{ hobby.dog.name }}</td>
                 <td>
-                    <a href="{{ path('app_back_hobby_show', {'id': hobby.id, dog_id: hobby.dog.id}) }}">show</a>
-                    <a href="{{ path('app_back_hobby_edit', {'id': hobby.id, dog_id: hobby.dog.id}) }}">edit</a>
+                    <a class="btn btn-sm btn-secondary" href="{{ path('app_back_hobby_edit', {'id': hobby.id, dog_id: hobby.dog.id}) }}">Editer le hobby</a>
+                    {{ include('back/hobby/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Aucun enregistrement trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+
+    <a class="btn btn-warning" href="{{ path('app_back_hobby_new', {id: dog.id}) }}">Ajouter un nouveau hobby</a> 
+
+        <a class="btn btn-warning float-end" href="{{ path('app_back_dog_index') }}">Retour à la liste des chiens</a>   
 
 {% endblock %}
