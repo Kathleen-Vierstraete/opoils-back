@@ -1,4 +1,4 @@
-<form method="post" action="{{ path('app_back_hobby_delete', {'id': hobby.id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer ce hobby ?');">
+<form method="post" action="{{ path('app_back_hobby_delete', {'id': hobby.id, dog_id: dog.id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer ce hobby ?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ hobby.id) }}">
     <button class="btn-sm btn-danger m-1 mx-0">Supprimer</button>
 </form>

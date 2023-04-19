@@ -172,14 +172,15 @@ class PictureController extends AbstractController
     
 
     /**
-     * @Route("/{id}", name="app_back_picture_delete", methods={"POST"})
+     * @Route("/{id}/dog/{dog_id<\d+>}", name="app_back_picture_delete", methods={"POST"})
+     * @ParamConverter("dog", options={"mapping": {"dog_id": "id"}})
      */
-    public function delete(Request $request, Picture $picture, PictureRepository $pictureRepository): Response
+    public function delete(Request $request, Picture $picture, PictureRepository $pictureRepository, Dog $dog): Response
     {
         if ($this->isCsrfTokenValid('delete'.$picture->getId(), $request->request->get('_token'))) {
             $pictureRepository->remove($picture, true);
         }
 
-        return $this->redirectToRoute('app_back_picture_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_back_picture_indexpictures', ['id' => $dog->getId()], Response::HTTP_SEE_OTHER);
     }
 }

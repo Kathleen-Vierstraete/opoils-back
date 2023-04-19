@@ -103,29 +103,17 @@ class HobbyController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_back_hobby_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Hobby $hobby, HobbyRepository $hobbyRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$hobby->getId(), $request->request->get('_token'))) {
-            $hobbyRepository->remove($hobby, true);
-        }
-
-        return $this->redirectToRoute('app_back_hobby_index', [], Response::HTTP_SEE_OTHER);
-    }
-}
-
-// TENTATIVE DE REDIRECTION DE LA ROUTE DE SUPPRESSION
-
-    /**
-     * @Route("/dog/{id<\d+>}", name="app_back_hobby_delete", methods={"POST"})
+     * @Route("/{id}/dog/{dog_id<\d+>}", name="app_back_hobby_delete", methods={"POST"})
      * @ParamConverter("dog", options={"mapping": {"dog_id": "id"}})
      */
-/*     public function delete(Request $request, Hobby $hobby, HobbyRepository $hobbyRepository, Dog $dog): Response
+    public function delete(Request $request, Hobby $hobby, HobbyRepository $hobbyRepository, Dog $dog): Response
     {
         if ($this->isCsrfTokenValid('delete'.$hobby->getId(), $request->request->get('_token'))) {
             $hobbyRepository->remove($hobby, true);
         }
 
         return $this->redirectToRoute('app_back_hobby_indexhobbies', ['id' => $dog->getId()], Response::HTTP_SEE_OTHER);
-    } */
+    }
+}
+
+
