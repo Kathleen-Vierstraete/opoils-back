@@ -3,7 +3,6 @@
 namespace App\Controller\Api;
 
 use App\Entity\Dog;
-use App\Entity\Member;
 use App\Repository\DogRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,6 +30,30 @@ class ApiDogController extends AbstractController
                             ['groups' => 'get_dogs_collection']
                         );
 
+    }
+
+    /**
+     * JSON request to get one given member
+     *
+     * @Route("/api/dogs/{id<\d+>}", name="api_dogs_get_item", methods={"GET"})
+     * 
+     */
+    public function getDogItem(Dog $dog = null)
+    {
+        
+        if (!$dog) {
+            return $this->json(
+                ['error' => 'Chien non trouvé'],
+                Response::HTTP_NOT_FOUND,
+                );
+            }
+
+            return $this->json(
+                $dog,
+                200,
+                [],
+                ['groups' => 'get_dog_item']
+            );
     }
 
 
@@ -61,7 +84,7 @@ class ApiDogController extends AbstractController
             );
         }
 
-        //we validate the gotten Member entity
+        //we validate the gotten Dog entity
         $errors = $validator->validate($dog);
 
         if(count($errors) > 0){
@@ -83,7 +106,7 @@ class ApiDogController extends AbstractController
         return $this->json(
             // the created dog
             $dog,
-            // Le status code 201 : CREATED
+            //The status code 201 : CREATED
             Response::HTTP_CREATED,
             [
                 // Location = /api/dogs (for redirection to all dogs url)

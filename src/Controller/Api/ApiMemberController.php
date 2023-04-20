@@ -34,6 +34,31 @@ class ApiMemberController extends AbstractController
     }
 
     /**
+     * JSON request to get one given member
+     *
+     * @Route("/api/members/{id<\d+>}", name="api_members_get_item", methods={"GET"})
+     * 
+     */
+    public function getMemberItem(Member $member = null)
+    {
+        
+
+        if (!$member) {
+            return $this->json(
+                ['error' => 'Membre non trouvé'],
+                Response::HTTP_NOT_FOUND,
+                );
+            }
+
+            return $this->json(
+                $member,
+                200,
+                [],
+                ['groups' => 'get_member_item']
+            );
+    }
+
+    /**
      * Creation of a member via API
      * 
      * @Route("/api/secure/members", name="api_members_post", methods={"POST"})
@@ -76,7 +101,7 @@ class ApiMemberController extends AbstractController
         return $this->json(
             // the created member
             $member,
-            // Le status code 201 : CREATED
+            //The status code 201 : CREATED
             Response::HTTP_CREATED,
             [
                 // Location = /api/members (for redirection to all members url)

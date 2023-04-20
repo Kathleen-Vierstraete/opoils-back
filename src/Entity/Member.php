@@ -19,74 +19,74 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"get_members_collection", "get_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"get_members_collection", "get_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"get_members_collection", "get_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item"})
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups({"get_members_collection", "get_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item"})
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"get_members_collection", "get_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"get_members_collection", "get_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"get_members_collection", "get_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item"})
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=10, nullable=true)
-     * @Groups({"get_members_collection", "get_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=150, nullable=true)
-     * @Groups({"get_members_collection", "get_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item"})
      */
     private $adress;
 
     /**
      * @ORM\Column(type="string", length=5)
-     * @Groups({"get_members_collection", "get_dogs_collection", "get_item"})
+     * @Groups({"get_members_collection", "get_dogs_collection", "get_item", "get_member_item"})
      */
     private $postal_code;
 
     /**
      * @ORM\Column(type="string", length=35)
-     * @Groups({"get_members_collection", "get_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"get_members_collection", "get_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item"})
      */
     private $picture;
 

@@ -2,10 +2,17 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Dog;
+use App\Entity\Hobby;
 use App\Repository\HobbyRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 
 class ApiHobbyController extends AbstractController
 {
@@ -24,5 +31,105 @@ class ApiHobbyController extends AbstractController
                             ['groups' => 'get_hobbies_collection']
                         );
 
+    }
+
+
+    /** 
+     * return in JSON the list of all hobbies of a given dog
+     *      
+     * @Route("/api/dog/{id<\d+>}/hobbies", name="app_api_get_hobbies_by_dog", methods={"GET"})
+     */
+    public function getHobbiesByDog(Dog $dog = null)
+    {
+
+        if(!$dog){
+            return $this->json(
+                ['error' => 'chien non trouvé'], 
+                 Response::HTTP_NOT_FOUND,
+            );
+        }
+
+        // using the methog getHobbies in the dog Entity thanks to the relation many to one
+        $hobbiesByDog = $dog->getHobbies();
+
+        $data = [
+            "dog" => $dog,
+            "hobbies" => $hobbiesByDog
+        ];
+        return $this->json(
+            $data,
+            Response::HTTP_OK,
+            [],
+            [
+                'groups' => [
+                    // the group of dog
+                    'get_dogs_collection',
+                    // the group of hobbies
+                    'get_hobbies_collection'
+                ]
+            ]);
+    }
+
+    /**
+     * Creation of a hobby for a given dog via API
+     * 
+     * @Route("/api/secure/dogs/{id<\d+>}/hobby", name="api_hobbies_post", methods={"POST"})
+     */
+    public function createItem(Request $request, SerializerInterface $serializer, ManagerRegistry $doctrine, ValidatorInterface $validator, Dog $dog = null)
+    {
+
+        if(!$dog){
+            return $this->json(
+                ['error' => 'chien non trouvé'], 
+                 Response::HTTP_NOT_FOUND,
+            );
+        }
+
+        // we get the JSON
+        $jsonContent = $request->getContent();
+
+        //managing errors
+        try {
+           
+            //we deserialize (convert) the JSON into a Hobby entity
+            $hobby = $serializer->deserialize($jsonContent, Hobby::class, 'json');
+        }
+        catch(NotEncodableValueException $e) {
+            return $this->json(
+                ["error" => 'JSON invalide'],
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+        }
+
+        //we validate the gotten Hobby entity
+        $errors = $validator->validate($hobby);
+
+        if(count($errors) > 0){
+            return $this->json(
+                $errors, 
+                Response::HTTP_UNPROCESSABLE_ENTITY,
+            );
+        }
+        
+
+        // Saving the entity
+        $hobby->setDog($dog);
+        $entityManager = $doctrine->getManager();
+        $entityManager->persist($hobby);
+        $entityManager->flush();
+
+        // returning the answer
+
+        return $this->json(
+            // the created hobby
+            $hobby,
+            // The status code 201 : CREATED
+            Response::HTTP_CREATED,
+            [
+                // Location = /api/hobbies(for redirection to all hobbies url)
+                'Location' => $this->generateUrl('app_api_hobby',)
+            ],
+            ['groups' => 'get_item']
+        );
     }
 }
