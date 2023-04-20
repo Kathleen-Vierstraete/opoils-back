@@ -37,16 +37,20 @@ class ApiDogController extends AbstractController
     /**
      * Creation of a dog via API
      * 
-     * @Route("/api/secure/dogs/member/{member_id<\d+>}", name="api_dogs_post", methods={"POST"})
+     * @Route("/api/secure/dogs", name="api_dogs_post", methods={"POST"})
      */
     public function createItem(Request $request, SerializerInterface $serializer, ManagerRegistry $doctrine, ValidatorInterface $validator)
     {
+        /** @var \App\Entity\Member $member*/
+        $member = $this->getUser();
+        // dd($member);
+
         // we get the JSON
         $jsonContent = $request->getContent();
 
-
         //managing errors
         try {
+           
             //we deserialize (convert) the JSON into a Dog entity
             $dog = $serializer->deserialize($jsonContent, Dog::class, 'json');
         }
@@ -66,8 +70,10 @@ class ApiDogController extends AbstractController
                 Response::HTTP_UNPROCESSABLE_ENTITY,
             );
         }
+        
 
         // Saving the entity
+        $dog->setMember($member);
         $entityManager = $doctrine->getManager();
         $entityManager->persist($dog);
         $entityManager->flush();
@@ -75,7 +81,7 @@ class ApiDogController extends AbstractController
         // returning the answer
 
         return $this->json(
-            // the created member
+            // the created dog
             $dog,
             // Le status code 201 : CREATED
             Response::HTTP_CREATED,
