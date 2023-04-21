@@ -184,7 +184,7 @@ class ApiDogController extends AbstractController
     {
         if (!$dog) {
             return $this->json(
-                ['error' => 'Membre non trouvé'],
+                ['error' => 'Chien non trouvé'],
                 Response::HTTP_NOT_FOUND,
                 );
             }

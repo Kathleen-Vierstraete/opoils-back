@@ -203,4 +203,26 @@ class ApiPictureController extends AbstractController
         }
     }
 
+//------------------------------------    
+
+     /**
+     * Deleting a given dog
+     * @Route("/api/secure/picture/{id<\d+>}", name="api_picture_delete_item", methods={"DELETE"})
+     */
+    public function deleteItem (Picture $picture = null, ManagerRegistry $doctrine)
+    {
+        if (!$picture) {
+            return $this->json(
+                ['error' => 'Photo non trouvée'],
+                Response::HTTP_NOT_FOUND,
+                );
+            }
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->remove($picture);
+            $entityManager->flush();
+        
+        return new Response(null, 204);
+    }        
+
 }

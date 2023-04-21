@@ -191,12 +191,33 @@ class ApiHobbyController extends AbstractController
                 //The status code 204 : UPDATED
                 204,
                 [
-                    
+
                 ],
                 ['groups' => 'get_item']
             );
         }
     }
 
+//------------------------------------    
+
+     /**
+     * Deleting a given dog
+     * @Route("/api/secure/hobby/{id<\d+>}", name="api_hobby_delete_item", methods={"DELETE"})
+     */
+    public function deleteItem (Hobby $hobby = null, ManagerRegistry $doctrine)
+    {
+        if (!$hobby) {
+            return $this->json(
+                ['error' => 'Hobby non trouvé'],
+                Response::HTTP_NOT_FOUND,
+                );
+            }
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->remove($hobby);
+            $entityManager->flush();
+        
+        return new Response(null, 204);
+    }    
     
 }
