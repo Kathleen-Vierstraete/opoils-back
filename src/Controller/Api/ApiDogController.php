@@ -173,4 +173,26 @@ class ApiDogController extends AbstractController
             );
         }
     }
+
+//------------------------------------    
+
+     /**
+     * Deleting a given dog
+     * @Route("/api/secure/dogs/{id<\d+>}", name="api_dog_delete_item", methods={"DELETE"})
+     */
+    public function deleteItem (Dog $dog = null, ManagerRegistry $doctrine)
+    {
+        if (!$dog) {
+            return $this->json(
+                ['error' => 'Membre non trouvé'],
+                Response::HTTP_NOT_FOUND,
+                );
+            }
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->remove($dog);
+            $entityManager->flush();
+        
+        return new Response(null, 204);
+    }
 }
