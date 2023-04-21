@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 
 class ApiHobbyController extends AbstractController
@@ -44,7 +45,7 @@ class ApiHobbyController extends AbstractController
 
         if(!$dog){
             return $this->json(
-                ['error' => 'chien non trouvé'], 
+                ['error' => 'Chien non trouvé'], 
                  Response::HTTP_NOT_FOUND,
             );
         }
@@ -80,7 +81,7 @@ class ApiHobbyController extends AbstractController
 
         if(!$dog){
             return $this->json(
-                ['error' => 'chien non trouvé'], 
+                ['error' => 'Chien non trouvé'], 
                  Response::HTTP_NOT_FOUND,
             );
         }
@@ -132,4 +133,70 @@ class ApiHobbyController extends AbstractController
             ['groups' => 'get_item']
         );
     }
+
+// -------------------------------------
+
+    /**
+     * Updating a dog via API put
+     * @Route("/api/secure/dogs/{dog_id<\d+>}/hobby/{id<\d+>}", name="api_hobbies_update_item", methods={"PUT"})
+     * @ParamConverter("dog", options={"mapping": {"dog_id": "id"}})
+     */
+    public function updateItem(ManagerRegistry $doctrine, Request $request, SerializerInterface $serializer, ValidatorInterface $validatorInterface, Hobby $hobby = null, Dog $dog = null)
+    {
+
+        if (!$dog) {
+            return $this->json([
+                'error' => "Chien non trouvé",
+                response::HTTP_NOT_FOUND
+            ]);
+        } 
+        
+        else if (!$hobby) {
+            return $this->json([
+                'error' => "Hobby non trouvé",
+                response::HTTP_NOT_FOUND
+            ]);
+        }
+        
+        else {
+            // get the json
+            $jsonContent = $request->getContent();
+
+            try {
+                // deserialize le json into post entity
+                $hobby = $serializer->deserialize($jsonContent, Hobby::class, 'json', ['object_to_populate' => $hobby]);
+            } catch (NotEncodableValueException $e) {
+                return $this->json(
+                    ["error" => "JSON INVALIDE"],
+                    Response::HTTP_UNPROCESSABLE_ENTITY
+                );
+            }
+
+            //we validate the gotten Hobby entity
+            $errors = $validatorInterface->validate($hobby);
+
+            if (count($errors) > 0) {
+                return $this->json(
+                    $errors,
+                    Response::HTTP_UNPROCESSABLE_ENTITY
+                );
+            }
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($hobby);
+            $entityManager->flush();
+
+            return $this->json(
+                $hobby,
+                //The status code 204 : UPDATED
+                204,
+                [
+                    
+                ],
+                ['groups' => 'get_item']
+            );
+        }
+    }
+
+    
 }
