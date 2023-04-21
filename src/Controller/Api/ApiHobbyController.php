@@ -49,7 +49,7 @@ class ApiHobbyController extends AbstractController
             );
         }
 
-        // using the methog getHobbies in the dog Entity thanks to the relation many to one
+        // using the method getHobbies in the dog Entity thanks to the relation many to one
         $hobbiesByDog = $dog->getHobbies();
 
         $data = [

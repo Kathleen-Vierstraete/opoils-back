@@ -15,13 +15,13 @@ class Picture
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"get_pictures_collection"})
+     * @Groups({"get_pictures_collection", "get_item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"get_pictures_collection"})
+     * @Groups({"get_pictures_collection", "get_item"})
      */
     private $picture;
 
