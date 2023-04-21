@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 
 class ApiPictureController extends AbstractController
@@ -137,10 +138,69 @@ class ApiPictureController extends AbstractController
         );
     }    
 
+// ------------------------------------------
 
 
+    /**
+     * Updating a dog via API put
+     * @Route("/api/secure/dogs/{dog_id<\d+>}/picture/{id<\d+>}", name="api_pictures_update_item", methods={"PUT"})
+     * @ParamConverter("dog", options={"mapping": {"dog_id": "id"}})
+     */
+    public function updateItem(ManagerRegistry $doctrine, Request $request, SerializerInterface $serializer, ValidatorInterface $validatorInterface, Picture $picture = null, Dog $dog = null)
+    {
 
+        if (!$dog) {
+            return $this->json([
+                'error' => "Chien non trouvé",
+                response::HTTP_NOT_FOUND
+            ]);
+        } 
+        
+        else if (!$picture) {
+            return $this->json([
+                'error' => "Photo non trouvée",
+                response::HTTP_NOT_FOUND
+            ]);
+        }
+        
+        else {
+            // get the json
+            $jsonContent = $request->getContent();
 
+            try {
+                // deserialize le json into post entity
+                $picture = $serializer->deserialize($jsonContent, Picture::class, 'json', ['object_to_populate' => $picture]);
+            } catch (NotEncodableValueException $e) {
+                return $this->json(
+                    ["error" => "JSON INVALIDE"],
+                    Response::HTTP_UNPROCESSABLE_ENTITY
+                );
+            }
 
+            //we validate the gotten Picture entity
+            $errors = $validatorInterface->validate($picture);
+
+            if (count($errors) > 0) {
+                return $this->json(
+                    $errors,
+                    Response::HTTP_UNPROCESSABLE_ENTITY
+                );
+            }
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($picture);
+            $entityManager->flush();
+
+            return $this->json(
+                $picture,
+                //The status code 204 : UPDATED
+                204,
+                [
+                    
+                ],
+                ['groups' => 'get_item']
+            );
+        }
+    }
 
 }
