@@ -110,4 +110,68 @@ class ApiMemberController extends AbstractController
             ['groups' => 'get_item']
         );
     }
+
+
+
+
+     /**
+     * Updating a member via API put
+     * @Route("/api/secure/members/{id<\d+>}", name="api_member_update_item", methods={"PUT"})
+     */
+    public function updateItem(ManagerRegistry $doctrine, Request $request, SerializerInterface $serializer, ValidatorInterface $validatorInterface, Member $member = null)
+    {
+
+        if(!$member) 
+        {
+            return $this->json([
+                'error' => "Membre non trouvé",
+                response::HTTP_NOT_FOUND
+            ]);
+        }
+
+        else
+        {
+            // get the json
+            $jsonContent = $request->getContent();
+
+            try 
+            {
+            // deserialize le json into post entity
+            $member = $serializer->deserialize($jsonContent, Member::class, 'json', ['object_to_populate' => $member]);
+
+            } 
+            catch (NotEncodableValueException $e) 
+            {
+                return $this->json(
+                    ["error" => "JSON INVALIDE"],
+                    Response::HTTP_UNPROCESSABLE_ENTITY
+                );
+            }
+
+            //we validate the gotten Member entity
+            $errors = $validatorInterface->validate($member);
+
+            if(count($errors) > 0)
+            {
+                return $this->json(
+                    $errors, Response::HTTP_UNPROCESSABLE_ENTITY
+                );
+            }
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($member);
+            $entityManager->flush();
+
+            return $this->json(
+                $member,
+                //The status code 204 : UPDATED
+                204,
+                [    
+                    // Location = /api/members (for redirection to all members url)
+                    'Location' => $this->generateUrl('app_api_members',)
+                ],
+                ['groups' => 'get_item']
+            );
+        }
+    }
 }
