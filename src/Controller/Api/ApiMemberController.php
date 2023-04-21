@@ -174,4 +174,27 @@ class ApiMemberController extends AbstractController
             );
         }
     }
+
+//------------------------------------    
+
+     /**
+     * Deleting a given member
+     * @Route("/api/secure/members/{id<\d+>}", name="api_member_delete_item", methods={"DELETE"})
+     */
+    public function deleteItem (Member $member = null, ManagerRegistry $doctrine)
+    {
+        if (!$member) {
+            return $this->json(
+                ['error' => 'Membre non trouvé'],
+                Response::HTTP_NOT_FOUND,
+                );
+            }
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->remove($member);
+            $entityManager->flush();
+        
+        return new Response(null, 204);
+    }
+
 }
