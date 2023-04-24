@@ -48,7 +48,7 @@ class MemberType extends AbstractType
                 // Si user existant, il a id non null
                 if ($user->getId() !== null) {
                     // Edit
-                    $form->add('password', null, [
+                    $form->add('password', PasswordType::class, [
                         // Pour le form d'édition, on n'associe pas le password à l'entité
                         // @link https://symfony.com/doc/current/reference/forms/types/form.html#mapped
                         'mapped' => false,
@@ -58,7 +58,7 @@ class MemberType extends AbstractType
                     ]);
                 } else {
                     // New
-                    $form->add('password', null, [
+                    $form->add('password', PasswordType::class, [
                         // En cas d'erreur du type
                         // Expected argument of type "string", "null" given at property path "password".
                         // (notamment à l'edit en cas de passage d'une valeur existante à vide)
@@ -95,7 +95,7 @@ class MemberType extends AbstractType
                 'label' => 'Votre adresse postale',
             ])
             ->add('postal_code', TextType::class, [
-                'label' => 'Votre code postal',
+                'label' => 'Votre département',
             ])
             ->add('city', TextType::class, [
                 'label' => 'Votre ville',
@@ -115,7 +115,7 @@ class MemberType extends AbstractType
                     ])
                 ]
             ])
-            ->add('pseudo', TextType::class, [
+            ->add('username', TextType::class, [
                 'label' => 'Votre pseudo',
             ])
         ;

@@ -97,12 +97,6 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     private $dogs;
 
     /**
-     * @ORM\Column(type="string", length=35)
-     * @Groups({"get_members_collection", "get_dogs_collection"})
-     */
-    private $Pseudo;
-
-    /**
      * @ORM\Column(type="string", length=65)
      * @Groups({"get_members_collection", "get_dogs_collection"})
      */
@@ -325,17 +319,6 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPseudo(): ?string
-    {
-        return $this->Pseudo;
-    }
-
-    public function setPseudo(string $Pseudo): self
-    {
-        $this->Pseudo = $Pseudo;
-
-        return $this;
-    }
 
     public function getSlug(): ?string
     {

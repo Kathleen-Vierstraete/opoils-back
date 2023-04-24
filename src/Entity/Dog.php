@@ -64,7 +64,7 @@ class Dog
 
     /**
      * @ORM\Column(type="string", length=65, nullable=true)
-     * @Groups({"get_dogs_collection"})
+     * @Groups({"get_dogs_collection", "get_members_collection"})
      */
     private $slug;
 

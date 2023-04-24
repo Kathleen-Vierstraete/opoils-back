@@ -61,8 +61,8 @@ class DogType extends AbstractType
             ->add('member', EntityType::class, [
                 //the related entity
                 'class' => Member::class, 
-                //we want to display the member's pseudo to link it to the dog
-                'choice_label' => 'pseudo', 
+                //we want to display the member's username to link it to the dog
+                'choice_label' => 'username', 
                 //this is an array
                 'multiple' =>false,
                 // expanded false to fit the entity and the cardinality
