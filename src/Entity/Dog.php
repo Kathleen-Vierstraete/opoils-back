@@ -68,6 +68,16 @@ class Dog
      */
     private $slug;
 
+    /**
+     * @ORM\Column(type="string", length=64)
+     */
+    private $size;
+
+    /**
+     * @ORM\Column(type="string", length=64)
+     */
+    private $personality;
+
     public function __construct()
     {
         $this->pictures = new ArrayCollection();
@@ -207,6 +217,30 @@ class Dog
     public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getSize(): ?string
+    {
+        return $this->size;
+    }
+
+    public function setSize(string $size): self
+    {
+        $this->size = $size;
+
+        return $this;
+    }
+
+    public function getPersonality(): ?string
+    {
+        return $this->personality;
+    }
+
+    public function setPersonality(string $personality): self
+    {
+        $this->personality = $personality;
 
         return $this;
     }
