@@ -70,19 +70,60 @@ class ApiMemberController extends AbstractController
         $member = $this->getUser();
         // dd($member);
 
+        $data  = []; 
 
-        // if (!$member) {
-        //     return $this->json(
-        //         ['error' => 'Membre non trouvé'],
-        //         Response::HTTP_NOT_FOUND,
-        //         );
-        //     }
+        $memberData = []; 
+
+        $lastname = $member->getLastname(); 
+        $firstname = $member->getFirstname(); 
+        $username = $member->getUsername(); 
+        $postalCode = $member->getPostalCode();
+        $email = $member->getEmail();
+        $picture = $member->getPicture();
+
+        $memberData = [
+            "lastname" => $lastname,
+            "firstname" => $firstname,   
+            "username" => $username,
+            "postalCode" => $postalCode,
+            "email" => $email,
+            "picture" => $picture,
+        ];
+
+        $memberDogs = $member->getDogs(); 
+        $dogs = []; 
+
+        foreach ($memberDogs as $memberDog){
+            $id = $memberDog->getId(); 
+            $name = $memberDog->getName();
+            $age = $memberDog->getAge(); 
+            $race = $memberDog->getRace(); 
+            $size = $memberDog->getSize(); 
+            $personality = $memberDog->getPersonality(); 
+            $presentation = $memberDog->getPresentation(); 
+            $slug = $memberDog->getSlug();    
+            
+            
+            $dogs[] = [
+                "id" => $id, 
+                "name" => $name, 
+                "age" => $age,
+                "race" => $race,
+                "size" => $size, 
+                "personality" => $personality,
+                "presentation" => $presentation, 
+                "slug" => $slug,
+            ];
+        };
+
+        $data = [
+            "memberData" => $memberData,
+            "dogs" => $dogs
+        ];
 
             return $this->json(
-                $member,
-                200,
-                [],
-                ['groups' => 'get_members_collection']
+                $data,
+                Response::HTTP_OK,
             );
     }
 
