@@ -68,7 +68,7 @@ class ApiMemberController extends AbstractController
     {
         /** @var \App\Entity\Member $member*/
         $member = $this->getUser();
-        // dd($member);
+        //dd($member);
 
         $data  = []; 
 
@@ -80,15 +80,6 @@ class ApiMemberController extends AbstractController
         $postalCode = $member->getPostalCode();
         $email = $member->getEmail();
         $picture = $member->getPicture();
-
-        $memberData = [
-            "lastname" => $lastname,
-            "firstname" => $firstname,   
-            "username" => $username,
-            "postalCode" => $postalCode,
-            "email" => $email,
-            "picture" => $picture,
-        ];
 
         $memberDogs = $member->getDogs(); 
         $dogs = []; 
@@ -116,13 +107,23 @@ class ApiMemberController extends AbstractController
             ];
         };
 
-        $data = [
-            "memberData" => $memberData,
+        $memberData = [
+            "lastname" => $lastname,
+            "firstname" => $firstname,   
+            "username" => $username,
+            "postalCode" => $postalCode,
+            "email" => $email,
+            "picture" => $picture,
             "dogs" => $dogs
         ];
 
+        $data = [
+            "memberData" => $memberData,
+
+        ];
+
             return $this->json(
-                $data,
+                [$memberData],
                 Response::HTTP_OK,
             );
     }
