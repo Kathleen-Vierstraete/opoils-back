@@ -81,7 +81,7 @@ class MemberController extends AbstractController
 
 // END FILES
 
-            $member->setSlug($slugger->slug($member->getUsername()));
+            $member->setSlug($slugger->slug($member->getUsername())->lower());
 
             $memberRepository->add($member, true);
 
@@ -158,7 +158,7 @@ class MemberController extends AbstractController
 
 // END FILES            
 
-            $member->setSlug($slugger->slug($member->getUsername()));
+            $member->setSlug($slugger->slug($member->getUsername())->lower());
 
             $memberRepository->add($member, true);
 

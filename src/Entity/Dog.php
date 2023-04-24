@@ -62,6 +62,12 @@ class Dog
      */
     private $hobbies;
 
+    /**
+     * @ORM\Column(type="string", length=65, nullable=true)
+     * @Groups({"get_dogs_collection"})
+     */
+    private $slug;
+
     public function __construct()
     {
         $this->pictures = new ArrayCollection();
@@ -189,6 +195,18 @@ class Dog
                 $hobby->setDog(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

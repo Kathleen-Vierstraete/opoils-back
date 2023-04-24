@@ -104,6 +104,7 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=65)
+     * @Groups({"get_members_collection", "get_dogs_collection"})
      */
     private $slug;
 
