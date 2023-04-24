@@ -32,7 +32,7 @@ class MemberController extends AbstractController
     /**
      * @Route("/new", name="app_back_member_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, SluggerInterface $slugger, MemberRepository $memberRepository, UserPasswordHasherInterface $userPasswordHasher): Response
+    public function new(Request $request, SluggerInterface $slugger, MemberRepository $memberRepository, UserPasswordHasherInterface $userPasswordHasher ): Response
     {
         $member = new Member();
         $form = $this->createForm(MemberType::class, $member);
@@ -80,6 +80,8 @@ class MemberController extends AbstractController
             // ... persist the $member variable or any other work
 
 // END FILES
+
+            $member->setSlug($slugger->slug($member->getUsername()));
 
             $memberRepository->add($member, true);
 
@@ -155,6 +157,8 @@ class MemberController extends AbstractController
             // ... persist the $member variable or any other work
 
 // END FILES            
+
+            $member->setSlug($slugger->slug($member->getUsername()));
 
             $memberRepository->add($member, true);
 

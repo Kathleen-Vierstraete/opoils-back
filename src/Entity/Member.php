@@ -102,6 +102,11 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $Pseudo;
 
+    /**
+     * @ORM\Column(type="string", length=65)
+     */
+    private $slug;
+
     public function __construct()
     {
         $this->dogs = new ArrayCollection();
@@ -327,6 +332,18 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPseudo(string $Pseudo): self
     {
         $this->Pseudo = $Pseudo;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
