@@ -73,7 +73,7 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     private $adress;
 
     /**
-     * @ORM\Column(type="string", length=5)
+     * @ORM\Column(type="string", length=64)
      * @Groups({"get_members_collection", "get_dogs_collection", "get_item", "get_member_item"})
      */
     private $postal_code;
