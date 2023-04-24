@@ -3,8 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Dog;
-use App\Entity\Member;
 use App\Entity\Hobby;
+use App\Entity\Member;
 use App\Entity\Picture;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class DogType extends AbstractType
 {
@@ -34,6 +35,28 @@ class DogType extends AbstractType
             ->add('presentation', TextType::class, [
                 'label' => 'Le présentation de votre chien',
             ])
+
+            ->add('size', ChoiceType::class, [
+                'choices' => [
+                    'Petit' => 'Petit',
+                    'Moyen' => 'Moyen',
+                    'Grand' => 'Grand'
+                ],
+                'expanded' => true,
+
+                'label' => 'La taille de votre chien',
+            ])
+
+            ->add('personality', ChoiceType::class, [
+                'choices' => [
+                    'Calme' => 'Calme',
+                    'Adaptable' => 'Adaptable',
+                    'Energique' => 'Energique'
+                ],
+                'expanded' => true,
+
+                'label' => 'Le tempérament de votre chien',
+            ])
             
             ->add('member', EntityType::class, [
                 //the related entity
@@ -47,34 +70,8 @@ class DogType extends AbstractType
                 'label' => 'Propriétaire',
             ])
 
-            // ->add('hobbies', TextType::class, [
-                 //the related entity
-                //  'class' => Hobby::class, 
-                 //we want to display the member's pseudo to link it to the dog
-                //  'choice_label' => 'hobby', 
-                //  'mapped' => false,
-                 //this is an array
-                //  'multiple' =>true,
-                 // expanded false to fit the entity and the cardinality
-                //  'expanded' => false,             
-            //     'label' => 'Les hobbys de votre chien',
-            // ]) 
 
-            // ->add('pictures', FileType::class, [
-            //     'label' => 'Votre photo de profil',
-            //     'mapped' => false,
-            //     'required' => false,
-            //     'constraints' => [
-            //         new File([
-            //             'maxSize' => '1024k',
-            //             'mimeTypes' => [
-            //                 'image/jpg',
-            //                 'image/jpeg',
-            //             ],
-            //             'mimeTypesMessage' => 'Merci de choisir un format d\'image valide',
-            //         ])
-            //     ]
-            // ])
+
         ;
     }
 
