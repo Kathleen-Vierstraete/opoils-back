@@ -107,23 +107,23 @@ class ApiMemberController extends AbstractController
             ];
         };
 
-        $memberData = [
+        $memberData [] = [
             "lastname" => $lastname,
             "firstname" => $firstname,   
             "username" => $username,
             "postalCode" => $postalCode,
             "email" => $email,
             "picture" => $picture,
-            "dogs" => $dogs
         ];
 
         $data = [
             "memberData" => $memberData,
+            "dogs" => $dogs,
 
         ];
 
             return $this->json(
-                [$memberData],
+                $data,
                 Response::HTTP_OK,
             );
     }
