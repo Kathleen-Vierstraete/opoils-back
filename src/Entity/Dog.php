@@ -18,13 +18,13 @@ class Dog
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"get_dogs_collection", "get_item", "get_dog_item"})
+     * @Groups({"get_dogs_collection", "get_members_collection", "get_item", "get_dog_item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"get_dogs_collection", "get_members_collection", "get_hobbies_collection", "get_pictures_collection", "get_item" , "get_dog_item"}) 
+     * @Groups({"get_dogs_collection", "get_hobbies_collection", "get_pictures_collection", "get_item" , "get_dog_item"}) 
      */
     private $name;
 

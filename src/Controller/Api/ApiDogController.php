@@ -128,6 +128,8 @@ class ApiDogController extends AbstractController
         /** @var \App\Entity\Member $member*/
         $member = $this->getUser();
 
+        dd($member);
+
         if (!$dog) {
             return $this->json([
                 'error' => "Chien non trouvé",

@@ -59,6 +59,36 @@ class ApiMemberController extends AbstractController
     }
 
     /**
+     * JSON request to get the connected member
+     * 
+     * @Route("/api/member", name="app_api_member", methods={"GET"})
+     * 
+     */
+    public function getConnectedMember()
+    {
+        /** @var \App\Entity\Member $member*/
+        $member = $this->getUser();
+        // dd($member);
+
+
+        // if (!$member) {
+        //     return $this->json(
+        //         ['error' => 'Membre non trouvé'],
+        //         Response::HTTP_NOT_FOUND,
+        //         );
+        //     }
+
+            return $this->json(
+                $member,
+                200,
+                [],
+                ['groups' => 'get_members_collection']
+            );
+    }
+
+
+
+    /**
      * Creation of a member via API
      * 
      * @Route("/api/secure/members", name="api_members_post", methods={"POST"})
