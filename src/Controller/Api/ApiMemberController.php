@@ -105,7 +105,7 @@ class ApiMemberController extends AbstractController
                 $picture = $dogPicture->getPicture();
             }
 
-            $picturesArray [] = [
+            $picturesArray = [
                 "id" => $id,
                 "picture" => $picture, 
             ];
@@ -118,7 +118,7 @@ class ApiMemberController extends AbstractController
                 $hobby = $dogHobby->getHobby();
             }
 
-            $hobbiesArray[] = [
+            $hobbiesArray = [
                 "id" => $id,
                 "hobby" => $hobby,
             ];
@@ -157,8 +157,6 @@ class ApiMemberController extends AbstractController
                 Response::HTTP_OK,
             );
     }
-
-
 
     /**
      * Creation of a member via API
