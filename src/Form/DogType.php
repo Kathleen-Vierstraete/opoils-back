@@ -57,6 +57,22 @@ class DogType extends AbstractType
 
                 'label' => 'Le tempérament de votre chien',
             ])
+
+            ->add('main_picture', FileType::class, [
+                'label' => 'Photo de profil de votre chien',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/jpg',
+                            'image/jpeg',
+                        ],
+                        'mimeTypesMessage' => 'Merci de choisir un format d\'image valide',
+                    ])
+                ]
+            ])
             
             ->add('member', EntityType::class, [
                 //the related entity

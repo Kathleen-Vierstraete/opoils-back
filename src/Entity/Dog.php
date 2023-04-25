@@ -82,6 +82,12 @@ class Dog
      */
     private $personality;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"get_dogs_collection", "get_members_collection", "get_hobbies_collection", "get_pictures_collection", "get_item" , "get_dog_item", "get_connected_member"}) 
+     */
+    private $main_picture;
+
     public function __construct()
     {
         $this->pictures = new ArrayCollection();
@@ -245,6 +251,18 @@ class Dog
     public function setPersonality(string $personality): self
     {
         $this->personality = $personality;
+
+        return $this;
+    }
+
+    public function getMainPicture(): ?string
+    {
+        return $this->main_picture;
+    }
+
+    public function setMainPicture(string $main_picture): self
+    {
+        $this->main_picture = $main_picture;
 
         return $this;
     }

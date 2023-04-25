@@ -65,7 +65,7 @@
                 <td>{{ dog.age }}</td>
                 <td>{{ dog.race }}</td>
                 <td>{{ dog.member.username }}</td>
-                <td>{# {{ dog.picture.picture }} #}</td>
+                <td><img src="{{ app.request.getBaseURL() }}/uploads/pictures/{{ dog.mainPicture }}" width="150px"></td>
                 <td>
                     <a class="btn btn-sm btn-info" href="{{ path('app_back_dog_show', {'id': dog.id}) }}">Voir</a>
                     <a class="btn btn-sm btn-secondary" href="{{ path('app_back_dog_edit', {'id': dog.id}) }}">Editer</a>
