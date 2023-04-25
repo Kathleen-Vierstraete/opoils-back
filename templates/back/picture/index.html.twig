@@ -31,7 +31,12 @@
         </tbody>
     </table>
 
-    <a class="btn btn-warning" href="{{ path('app_back_picture_new', {id: dog.id}) }}">Ajouter une nouvelle photo</a>
+<p><a class="btn btn-success" href="{{ path('app_back_picture_new', {id: dog.id}) }}">Ajouter une nouvelle photo</a></p>
 
-            <a class="btn btn-warning float-end" href="{{ path('app_back_dog_index') }}">Retour à la liste des chiens</a>   
+<a class="btn btn-warning float-end" href="{{ path('app_back_dog_index') }}">Retour à la liste des chiens</a>
+
+<p><a class="btn btn-warning " href="{{ path('app_back_dog_show', {'id': dog.member.id}) }}">Retour au profil de {{ dog.name }} </a></p><br>  
+
+
+  
 {% endblock %}

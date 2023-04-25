@@ -1,9 +1,11 @@
 {% extends 'back/base_back.html.twig' %}
 
-{% block title %}Membres{% endblock %}
+{% block title %}Fiche de {{ member.username }}{% endblock %}
 
 {% block body %}
-    <h1>Fiche membre</h1>
+    <h1>Fiche de {{ member.username }}</h1>
+
+    <h3>Profil général</h3>
 
     <table class="table">
         <tbody>
@@ -19,10 +21,6 @@
                 <th>Rôle</th>
                 <td>{{ member.roles ? member.roles|json_encode : '' }}</td>
             </tr>
-            {# <tr>
-                <th>Password</th>
-                <td>{{ member.password }}</td>
-            </tr> #}
             <tr>
                 <th>Nom de famille</th>
                 <td>{{ member.lastname }}</td>
@@ -34,7 +32,11 @@
             <tr>
                 <th>Pseudo</th>
                 <td>{{ member.username }}</td>
-            </tr>            
+            </tr> 
+            <tr>
+                <th>Présentation</th>
+                <td>{{ member.presentationMember }}</td>
+            </tr>             
             <tr>
                 <th>Téléphone</th>
                 <td>{{ member.phone }}</td>
@@ -44,7 +46,7 @@
                 <td>{{ member.adress }}</td>
             </tr>
             <tr>
-                <th>Code postal</th>
+                <th>Département</th>
                 <td>{{ member.postalCode }}</td>
             </tr>
             <tr>
@@ -58,9 +60,21 @@
         </tbody>
     </table>
 
-    <a class="btn btn-warning float-end" href="{{ path('app_back_member_index') }}">Retour à la liste</a>
+<p><a class="btn btn-secondary m-1" href="{{ path('app_back_member_edit', {'id': member.id}) }}">Editer le profil général</a></p>
 
-    <a class="btn btn-secondary m-1" href="{{ path('app_back_member_edit', {'id': member.id}) }}">Editer</a>
+    <h3>Les chiens de {{ member.username }}</h3><br>
+
+{% for dog in member.dogs %}
+
+<p><a class="btn btn-sm btn-info" href="{{ path('app_back_dog_show', {'id': dog.member.id}) }}">{{ dog.name }}</a></p>
+
+<p><img src="{{ app.request.getBaseURL() }}/uploads/pictures/{{ dog.mainPicture }}" width="200px"></p><br>
+                    
+{% endfor %}
+                        
+<a class="btn btn-warning float-end" href="{{ path('app_back_dog_index') }}">Retour à la liste des chiens</a>
+
+<p><a class="btn btn-warning " href="{{ path('app_back_member_index') }}">Retour à la liste des membres</a></p><br>   
 
     {{ include('back/member/_delete_form.html.twig') }}
 {% endblock %}

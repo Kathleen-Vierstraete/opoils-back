@@ -139,7 +139,9 @@ class ApiMemberController extends AbstractController
         $username = $member->getUsername();
         $postalCode = $member->getPostalCode();
         $email = $member->getEmail();
+        $slug = $member->getSlug();
         $memberPicture = $member->getPicture();
+        
 
         $memberData[] = [
             "lastname" => $lastname,
@@ -147,6 +149,7 @@ class ApiMemberController extends AbstractController
             "username" => $username,
             "postalCode" => $postalCode,
             "email" => $email,
+            "slug" => $slug,
             "memberPicture" => $memberPicture,
         ]; 
 

@@ -11,10 +11,8 @@
                 <th>Id</th>
                 <th>Email</th>
                 <th>Rôle</th>
-                {# <th>Password</th> #}
                 <th>Nom de famille</th>
                 <th>Prénom</th>
-                {# <th>Username</th> #}
                 <th>Pseudo</th>
                 <th>Téléphone</th>
                 <th>Adresse</th>
@@ -30,10 +28,8 @@
                 <td>{{ member.id }}</td>
                 <td>{{ member.email }}</td>
                 <td>{{ member.roles ? member.roles|json_encode : '' }}</td>
-                {# <td>{{ member.password }}</td> #}
                 <td>{{ member.lastname }}</td>
                 <td>{{ member.firstname }}</td>
-                {# <td>{{ member.username }}</td> #}
                 <td>{{ member.username }}</td>
                 <td>{{ member.phone }}</td>
                 <td>{{ member.adress }}</td>

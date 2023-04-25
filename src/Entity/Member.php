@@ -31,26 +31,26 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member"})
+     * @Groups({"get_item", "get_member_item", "get_connected_member"})
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member"})
+     * @Groups({"get_item", "get_member_item", "get_connected_member"})
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member"})
+     * @Groups({"get_item", "get_member_item", "get_connected_member"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member"})
+     * @Groups({"get_item", "get_member_item", "get_connected_member"})
      */
     private $firstname;
 
@@ -62,19 +62,19 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=10, nullable=true)
-     * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member"})
+     * @Groups({"get_item", "get_member_item", "get_connected_member"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=150, nullable=true)
-     * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member"})
+     * @Groups({"get_item", "get_member_item", "get_connected_member"})
      */
     private $adress;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member", "get_dogs_collection"})
      */
     private $postal_code;
 
@@ -98,7 +98,7 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=65)
-     * @Groups({"get_members_collection", "get_dogs_collection"})
+     * @Groups({"get_members_collection", "get_dogs_collection", "get_connected_member"})
      */
     private $slug;
 

@@ -24,10 +24,10 @@
             <tr>
                 <td>{{ dog.id }}</td>
                 <td>{{ dog.name }}</td>
-                <td>{{ dog.age }}</td>
+                <td>{{ dog.age }} ans</td>
                 <td>{{ dog.race }}</td>
                 <td>{{ dog.presentation }}</td>
-                <td>{{ dog.member.username }}</td>
+                <td><a class="btn btn-sm btn-info" href="{{ path('app_back_member_show', {'id': dog.member.id}) }}">{{ dog.member.username }}</a> </td>
                 <td>
                 {% for hobby in dog.hobbies %}
                     <ul>

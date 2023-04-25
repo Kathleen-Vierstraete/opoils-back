@@ -45,6 +45,8 @@
         </tbody>
     </table>
 
+    <p><a class="btn btn-warning" href="{{ path('app_back_member_new') }}">Ajouter un nouveau membre</a></p>
+
     <h1>Liste des derniers chiens ajoutés</h1><br>
 
     <table class="table table-hover ">
@@ -62,7 +64,7 @@
         {% for dog in dogs %}
             <tr>
                 <td>{{ dog.name }}</td>
-                <td>{{ dog.age }}</td>
+                <td>{{ dog.age }} ans</td>
                 <td>{{ dog.race }}</td>
                 <td>{{ dog.member.username }}</td>
                 <td><img src="{{ app.request.getBaseURL() }}/uploads/pictures/{{ dog.mainPicture }}" width="150px"></td>
@@ -79,5 +81,7 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <p><a class="btn btn-warning" href="{{ path('app_back_dog_new') }}">Ajouter un nouveau chien</a></p>
 
 {% endblock %}

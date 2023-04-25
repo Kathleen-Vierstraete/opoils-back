@@ -32,8 +32,13 @@
         </tbody>
     </table>
 
-    <a class="btn btn-warning" href="{{ path('app_back_hobby_new', {id: dog.id}) }}">Ajouter un nouveau hobby</a> 
+<p><a class="btn btn-success" href="{{ path('app_back_hobby_new', {id: dog.id}) }}">Ajouter un nouveau hobby</a></p>   
 
-        <a class="btn btn-warning float-end" href="{{ path('app_back_dog_index') }}">Retour à la liste des chiens</a>   
+<a class="btn btn-warning float-end" href="{{ path('app_back_dog_index') }}">Retour à la liste des chiens</a>
+
+<p><a class="btn btn-warning " href="{{ path('app_back_dog_show', {'id': dog.member.id}) }}">Retour au profil de {{ dog.name }} </a></p><br>  
+
+      
+
 
 {% endblock %}
