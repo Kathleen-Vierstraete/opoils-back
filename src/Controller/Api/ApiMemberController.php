@@ -92,9 +92,8 @@ class ApiMemberController extends AbstractController
             $size = $memberDog->getSize(); 
             $personality = $memberDog->getPersonality(); 
             $presentation = $memberDog->getPresentation(); 
-            $slug = $memberDog->getSlug();    
-            
-            
+            $slug = $memberDog->getSlug();  
+           
             $dogs[] = [
                 "id" => $id, 
                 "name" => $name, 
@@ -105,7 +104,37 @@ class ApiMemberController extends AbstractController
                 "presentation" => $presentation, 
                 "slug" => $slug,
             ];
+
+            $dogPictures = $memberDog->getPictures(); 
+            $picturesArray = [];
+
+            foreach ($dogPictures as $dogPicture){
+                $id = $dogPicture->getId();
+                $picture = $dogPicture->getPicture();
+            }
+
+            $picturesArray [] = [
+                "id" => $id,
+                "picture" => $picture,
+                
+            ];
+
+            $dogHobbies = $memberDog->getHobbies(); 
+            $hobbiesArray = []; 
+
+            foreach ($dogHobbies as $dogHobby){
+                $id = $dogHobby->getId();
+                $hobby = $dogHobby->getHobby();
+            }
+
+            $hobbiesArray[] = [
+                "id" => $id,
+                "hobby" => $hobby,
+            ];
+
         };
+
+
 
         $memberData [] = [
             "lastname" => $lastname,
@@ -119,6 +148,8 @@ class ApiMemberController extends AbstractController
         $data = [
             "memberData" => $memberData,
             "dogs" => $dogs,
+            "pictureArray" => $picturesArray,
+            "hobbiesArray" => $hobbiesArray
 
         ];
 
