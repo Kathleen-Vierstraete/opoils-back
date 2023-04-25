@@ -90,6 +90,13 @@ class ApiPictureController extends AbstractController
             );
         }
 
+        if (count ($dog->getPictures())===3){
+            return $this->json(
+                ['error' => 'Limitation à 3 photos'], 
+                 Response::HTTP_NOT_FOUND,
+            ); 
+        }
+
         // we get the JSON
         $jsonContent = $request->getContent();
 

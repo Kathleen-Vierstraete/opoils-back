@@ -105,6 +105,39 @@ class DogController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+// GESTION FILES MEDIA
+
+    /** @var UploadedFile $pictureFile */
+    $pictureFile = $form->get('main_picture')->getData();
+
+            // this condition is needed because the 'picture' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            if ($pictureFile) {
+                $originalFilename = pathinfo($pictureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$pictureFile->guessExtension();    
+
+                // Move the file to the directory where pictures are stored
+                try {
+                    $pictureFile->move(
+                        $this->getParameter('pictures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                    throw $e;
+                }
+
+                // updates the 'pictureFilename' property to store the JPG file name
+                // instead of its contents
+                $dog->setMainPicture($newFilename);
+            }
+
+            // ... persist the $member variable or any other work
+
+// END FILES
             
             $dog->setSlug($slugger->slug($dog->getName())->lower());
             
