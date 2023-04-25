@@ -79,9 +79,11 @@ class ApiMemberController extends AbstractController
         $username = $member->getUsername(); 
         $postalCode = $member->getPostalCode();
         $email = $member->getEmail();
-        $picture = $member->getPicture();
+        $memberPicture = $member->getPicture();
 
         $memberDogs = $member->getDogs(); 
+        // dd($memberDogs);
+
         $dogs = []; 
 
         foreach ($memberDogs as $memberDog){
@@ -92,20 +94,10 @@ class ApiMemberController extends AbstractController
             $size = $memberDog->getSize(); 
             $personality = $memberDog->getPersonality(); 
             $presentation = $memberDog->getPresentation(); 
-            $slug = $memberDog->getSlug();  
-           
-            $dogs[] = [
-                "id" => $id, 
-                "name" => $name, 
-                "age" => $age,
-                "race" => $race,
-                "size" => $size, 
-                "personality" => $personality,
-                "presentation" => $presentation, 
-                "slug" => $slug,
-            ];
+            $slug = $memberDog->getSlug(); 
 
             $dogPictures = $memberDog->getPictures(); 
+
             $picturesArray = [];
 
             foreach ($dogPictures as $dogPicture){
@@ -115,8 +107,7 @@ class ApiMemberController extends AbstractController
 
             $picturesArray [] = [
                 "id" => $id,
-                "picture" => $picture,
-                
+                "picture" => $picture, 
             ];
 
             $dogHobbies = $memberDog->getHobbies(); 
@@ -131,10 +122,21 @@ class ApiMemberController extends AbstractController
                 "id" => $id,
                 "hobby" => $hobby,
             ];
+            
+            $dogs[] = [
+                "id" => $id, 
+                "name" => $name, 
+                "age" => $age,
+                "race" => $race,
+                "size" => $size, 
+                "personality" => $personality,
+                "presentation" => $presentation, 
+                "slug" => $slug,
+                "pictureArray" => $picturesArray,
+                "hobbiesArray" => $hobbiesArray
+            ];
 
         };
-
-
 
         $memberData [] = [
             "lastname" => $lastname,
@@ -142,15 +144,12 @@ class ApiMemberController extends AbstractController
             "username" => $username,
             "postalCode" => $postalCode,
             "email" => $email,
-            "picture" => $picture,
+            "memberPicture" => $memberPicture,
         ];
 
         $data = [
             "memberData" => $memberData,
             "dogs" => $dogs,
-            "pictureArray" => $picturesArray,
-            "hobbiesArray" => $hobbiesArray
-
         ];
 
             return $this->json(
