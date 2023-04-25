@@ -14,6 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class DogType extends AbstractType
 {
@@ -32,7 +33,7 @@ class DogType extends AbstractType
                 'label' => 'La race de votre chien',
             ])
 
-            ->add('presentation', TextType::class, [
+            ->add('presentation', TextareaType::class, [
                 'label' => 'Le présentation de votre chien',
             ])
 

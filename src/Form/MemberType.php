@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class MemberType extends AbstractType
 {
@@ -84,8 +85,12 @@ class MemberType extends AbstractType
             ])
 
             ->add('username', TextType::class, [
-                'label' => 'Votre mail de connexion',
+                'label' => 'Votre pseudo',
             ])
+
+            ->add('presentation_member', TextareaType::class, [
+                'label' => 'Votre présentation',
+            ])            
 
             ->add('phone', TextType::class, [
                 'label' => 'Votre numéro de téléphone',
@@ -114,9 +119,6 @@ class MemberType extends AbstractType
                         'mimeTypesMessage' => 'Merci de choisir un format d\'image valide',
                     ])
                 ]
-            ])
-            ->add('username', TextType::class, [
-                'label' => 'Votre pseudo',
             ])
         ;
     }

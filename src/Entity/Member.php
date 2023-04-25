@@ -31,62 +31,62 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"get_members_collection", "get_item", "get_member_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member"})
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups({"get_members_collection", "get_item", "get_member_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member"})
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"get_members_collection", "get_item", "get_member_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"get_members_collection", "get_item", "get_member_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"get_members_collection", "get_item", "get_member_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member"})
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=10, nullable=true)
-     * @Groups({"get_members_collection", "get_item", "get_member_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=150, nullable=true)
-     * @Groups({"get_members_collection", "get_item", "get_member_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member"})
      */
     private $adress;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"get_members_collection", "get_dogs_collection", "get_item", "get_member_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member"})
      */
     private $postal_code;
 
     /**
      * @ORM\Column(type="string", length=35)
-     * @Groups({"get_members_collection", "get_item", "get_member_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"get_members_collection", "get_item", "get_member_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member"})
      */
     private $picture;
 
@@ -101,6 +101,12 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"get_members_collection", "get_dogs_collection"})
      */
     private $slug;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member"})
+     */
+    private $presentation_member;
 
     public function __construct()
     {
@@ -328,6 +334,18 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getPresentationMember(): ?string
+    {
+        return $this->presentation_member;
+    }
+
+    public function setPresentationMember(?string $presentation_member): self
+    {
+        $this->presentation_member = $presentation_member;
 
         return $this;
     }
