@@ -24,13 +24,13 @@ class ApiMemberController extends AbstractController
     public function getCollection(MemberRepository $memberRepository): Response
     {
         $membersList = $memberRepository->findAll();
-        
-        return $this->json(
-                            $membersList,
-                            Response::HTTP_OK, [], 
-                            ['groups' => 'get_members_collection']
-                        );
 
+        return $this->json(
+            $membersList,
+            Response::HTTP_OK,
+            [],
+            ['groups' => 'get_members_collection']
+        );
     }
 
     /**
@@ -41,21 +41,21 @@ class ApiMemberController extends AbstractController
      */
     public function getMemberItem(Member $member = null)
     {
-        
+
 
         if (!$member) {
             return $this->json(
                 ['error' => 'Membre non trouvé'],
                 Response::HTTP_NOT_FOUND,
-                );
-            }
-
-            return $this->json(
-                $member,
-                200,
-                [],
-                ['groups' => 'get_member_item']
             );
+        }
+
+        return $this->json(
+            $member,
+            200,
+            [],
+            ['groups' => 'get_member_item']
+        );
     }
 
     /**
@@ -70,92 +70,97 @@ class ApiMemberController extends AbstractController
         $member = $this->getUser();
         //dd($member);
 
-        $data  = []; 
+/*         $data  = [];
 
-        $memberData = []; 
+        $memberData = [];
 
-        $lastname = $member->getLastname(); 
-        $firstname = $member->getFirstname(); 
-        $username = $member->getUsername(); 
+
+
+        $memberDogs = $member->getDogs();
+        // dd($memberDogs);
+
+        $dogs = [];
+
+        foreach ($memberDogs as $memberDog) {
+            $id = $memberDog->getId();
+            $name = $memberDog->getName();
+            $age = $memberDog->getAge();
+            $race = $memberDog->getRace();
+            $size = $memberDog->getSize();
+            $personality = $memberDog->getPersonality();
+            $presentation = $memberDog->getPresentation();
+            $slug = $memberDog->getSlug();
+
+            $dogPictures = $memberDog->getPictures();
+
+            $picturesArray = [];
+
+            foreach ($dogPictures as $dogPicture) {
+                $id = $dogPicture->getId();
+                $picture = $dogPicture->getPicture();
+
+
+                $picturesArray[] = [
+                    "id" => $id,
+                    "picture" => $picture,
+                ];
+            }
+
+            $dogHobbies = $memberDog->getHobbies();
+            $hobbiesArray = [];
+
+            foreach ($dogHobbies as $dogHobby) {
+                $id = $dogHobby->getId();
+                $hobby = $dogHobby->getHobby();
+
+
+                $hobbiesArray[] = [
+                    "id" => $id,
+                    "hobby" => $hobby,
+                ];
+            }
+
+            $dogs[] = [
+                "id" => $id,
+                "name" => $name,
+                "age" => $age,
+                "race" => $race,
+                "size" => $size,
+                "personality" => $personality,
+                "presentation" => $presentation,
+                "slug" => $slug,
+                "picturesArray" => $picturesArray,
+                "hobbiesArray" => $hobbiesArray
+            ];
+        }; */
+
+        $lastname = $member->getLastname();
+        $firstname = $member->getFirstname();
+        $username = $member->getUsername();
         $postalCode = $member->getPostalCode();
         $email = $member->getEmail();
         $memberPicture = $member->getPicture();
 
-        $memberDogs = $member->getDogs(); 
-        // dd($memberDogs);
-
-        $dogs = []; 
-
-        foreach ($memberDogs as $memberDog){
-            $id = $memberDog->getId(); 
-            $name = $memberDog->getName();
-            $age = $memberDog->getAge(); 
-            $race = $memberDog->getRace(); 
-            $size = $memberDog->getSize(); 
-            $personality = $memberDog->getPersonality(); 
-            $presentation = $memberDog->getPresentation(); 
-            $slug = $memberDog->getSlug(); 
-
-            $dogPictures = $memberDog->getPictures(); 
-
-            $picturesArray = [];
-
-            foreach ($dogPictures as $dogPicture){
-                $id = $dogPicture->getId();
-                $picture = $dogPicture->getPicture();
-            }
-
-            $picturesArray = [
-                "id" => $id,
-                "picture" => $picture, 
-            ];
-
-            $dogHobbies = $memberDog->getHobbies(); 
-            $hobbiesArray = []; 
-
-            foreach ($dogHobbies as $dogHobby){
-                $id = $dogHobby->getId();
-                $hobby = $dogHobby->getHobby();
-            }
-
-            $hobbiesArray = [
-                "id" => $id,
-                "hobby" => $hobby,
-            ];
-            
-            $dogs[] = [
-                "id" => $id, 
-                "name" => $name, 
-                "age" => $age,
-                "race" => $race,
-                "size" => $size, 
-                "personality" => $personality,
-                "presentation" => $presentation, 
-                "slug" => $slug,
-                "pictureArray" => $picturesArray,
-                "hobbiesArray" => $hobbiesArray
-            ];
-
-        };
-
-        $memberData [] = [
+        $memberData[] = [
             "lastname" => $lastname,
-            "firstname" => $firstname,   
+            "firstname" => $firstname,
             "username" => $username,
             "postalCode" => $postalCode,
             "email" => $email,
             "memberPicture" => $memberPicture,
-        ];
+        ]; 
 
         $data = [
             "memberData" => $memberData,
-            "dogs" => $dogs,
+            "dogs" => $member->getDogs(),
         ];
 
-            return $this->json(
-                $data,
-                Response::HTTP_OK,
-            );
+        return $this->json(
+            $data,
+            Response::HTTP_OK,
+            [],
+            ['groups' => 'get_connected_member']
+        );
     }
 
     /**
@@ -173,8 +178,7 @@ class ApiMemberController extends AbstractController
         try {
             //we deserialize (convert) the JSON into a Member entity
             $member = $serializer->deserialize($jsonContent, Member::class, 'json');
-        }
-        catch(NotEncodableValueException $e) {
+        } catch (NotEncodableValueException $e) {
             return $this->json(
                 ["error" => 'JSON invalide'],
                 Response::HTTP_UNPROCESSABLE_ENTITY
@@ -184,9 +188,9 @@ class ApiMemberController extends AbstractController
         //we validate the gotten Member entity
         $errors = $validator->validate($member);
 
-        if(count($errors) > 0){
+        if (count($errors) > 0) {
             return $this->json(
-                $errors, 
+                $errors,
                 Response::HTTP_UNPROCESSABLE_ENTITY,
             );
         }
@@ -214,34 +218,26 @@ class ApiMemberController extends AbstractController
 
 
 
-     /**
+    /**
      * Updating a member via API put
      * @Route("/api/secure/members/{id<\d+>}", name="api_member_update_item", methods={"PUT"})
      */
     public function updateItem(ManagerRegistry $doctrine, Request $request, SerializerInterface $serializer, ValidatorInterface $validatorInterface, Member $member = null)
     {
 
-        if(!$member) 
-        {
+        if (!$member) {
             return $this->json([
                 'error' => "Membre non trouvé",
                 response::HTTP_NOT_FOUND
             ]);
-        }
-
-        else
-        {
+        } else {
             // get the json
             $jsonContent = $request->getContent();
 
-            try 
-            {
-            // deserialize le json into post entity
-            $member = $serializer->deserialize($jsonContent, Member::class, 'json', ['object_to_populate' => $member]);
-
-            } 
-            catch (NotEncodableValueException $e) 
-            {
+            try {
+                // deserialize le json into post entity
+                $member = $serializer->deserialize($jsonContent, Member::class, 'json', ['object_to_populate' => $member]);
+            } catch (NotEncodableValueException $e) {
                 return $this->json(
                     ["error" => "JSON INVALIDE"],
                     Response::HTTP_UNPROCESSABLE_ENTITY
@@ -251,10 +247,10 @@ class ApiMemberController extends AbstractController
             //we validate the gotten Member entity
             $errors = $validatorInterface->validate($member);
 
-            if(count($errors) > 0)
-            {
+            if (count($errors) > 0) {
                 return $this->json(
-                    $errors, Response::HTTP_UNPROCESSABLE_ENTITY
+                    $errors,
+                    Response::HTTP_UNPROCESSABLE_ENTITY
                 );
             }
 
@@ -266,7 +262,7 @@ class ApiMemberController extends AbstractController
                 $member,
                 //The status code 204 : UPDATED
                 204,
-                [    
+                [
                     // Location = /api/members (for redirection to all members url)
                     'Location' => $this->generateUrl('app_api_members',)
                 ],
@@ -275,26 +271,25 @@ class ApiMemberController extends AbstractController
         }
     }
 
-//------------------------------------    
+    //------------------------------------    
 
-     /**
+    /**
      * Deleting a given member
      * @Route("/api/secure/members/{id<\d+>}", name="api_member_delete_item", methods={"DELETE"})
      */
-    public function deleteItem (Member $member = null, ManagerRegistry $doctrine)
+    public function deleteItem(Member $member = null, ManagerRegistry $doctrine)
     {
         if (!$member) {
             return $this->json(
                 ['error' => 'Membre non trouvé'],
                 Response::HTTP_NOT_FOUND,
-                );
-            }
+            );
+        }
 
-            $entityManager = $doctrine->getManager();
-            $entityManager->remove($member);
-            $entityManager->flush();
-        
+        $entityManager = $doctrine->getManager();
+        $entityManager->remove($member);
+        $entityManager->flush();
+
         return new Response(null, 204);
     }
-
 }

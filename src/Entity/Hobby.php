@@ -15,13 +15,13 @@ class Hobby
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"get_hobbies_collection"})
+     * @Groups({"get_hobbies_collection", "get_connected_member", "get_dogs_collection"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"get_hobbies_collection"})
+     * @Groups({"get_hobbies_collection", "get_connected_member", "get_dogs_collection"})
      */
     private $hobby;
 

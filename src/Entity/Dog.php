@@ -18,31 +18,31 @@ class Dog
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"get_dogs_collection", "get_members_collection", "get_item", "get_dog_item"})
+     * @Groups({"get_dogs_collection", "get_members_collection", "get_item", "get_dog_item", "get_connected_member"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"get_dogs_collection", "get_members_collection", "get_hobbies_collection", "get_pictures_collection", "get_item" , "get_dog_item"}) 
+     * @Groups({"get_dogs_collection", "get_members_collection", "get_hobbies_collection", "get_pictures_collection", "get_item" , "get_dog_item", "get_connected_member"}) 
      */
     private $name;
 
     /**
      * @ORM\Column(type="smallint")
-     * @Groups({"get_dogs_collection", "get_members_collection", "get_item" , "get_dog_item"})
+     * @Groups({"get_dogs_collection", "get_members_collection", "get_item" , "get_dog_item", "get_connected_member"})
      */
     private $age;
 
     /**
      * @ORM\Column(type="string", length=35)
-     * @Groups({"get_dogs_collection", "get_members_collection", "get_item", "get_dog_item"})
+     * @Groups({"get_dogs_collection", "get_members_collection", "get_item", "get_dog_item", "get_connected_member"})
      */
     private $race;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"get_dogs_collection", "get_members_collection", "get_item", "get_dog_item"})
+     * @Groups({"get_dogs_collection", "get_members_collection", "get_item", "get_dog_item", "get_connected_member"})
      */
     private $presentation;
 
@@ -54,29 +54,31 @@ class Dog
 
     /**
      * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="dog", cascade={"remove"})
+     * @Groups({"get_connected_member", "get_dogs_collection"})
      */
     private $pictures;
 
     /**
      * @ORM\OneToMany(targetEntity=Hobby::class, mappedBy="dog", cascade={"remove"})
+     * @Groups({"get_connected_member", "get_dogs_collection"})
      */
     private $hobbies;
 
     /**
      * @ORM\Column(type="string", length=65, nullable=true)
-     * @Groups({"get_dogs_collection", "get_members_collection"})
+     * @Groups({"get_dogs_collection", "get_members_collection", "get_connected_member"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"get_dogs_collection", "get_members_collection"})
+     * @Groups({"get_dogs_collection", "get_members_collection", "get_connected_member"})
      */
     private $size;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"get_dogs_collection", "get_members_collection"})
+     * @Groups({"get_dogs_collection", "get_members_collection", "get_connected_member"})
      */
     private $personality;
 

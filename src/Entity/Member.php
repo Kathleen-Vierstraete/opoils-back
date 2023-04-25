@@ -19,13 +19,13 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"get_members_collection", "get_item", "get_member_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"get_members_collection", "get_item", "get_member_item"})
+     * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member"})
      */
     private $email;
 
