@@ -86,6 +86,13 @@ class ApiHobbyController extends AbstractController
             );
         }
 
+        if (count ($dog->getHobbies())===3){
+            return $this->json(
+                ['error' => 'Limitation à 3 hobbies'], 
+                 Response::HTTP_NOT_FOUND,
+            ); 
+        }
+
         // we get the JSON
         $jsonContent = $request->getContent();
 
@@ -126,10 +133,7 @@ class ApiHobbyController extends AbstractController
             $hobby,
             // The status code 201 : CREATED
             Response::HTTP_CREATED,
-            [
-                // Location = /api/hobbies(for redirection to all hobbies url)
-                'Location' => $this->generateUrl('app_api_hobby',)
-            ],
+            [],
             ['groups' => 'get_item']
         );
     }
@@ -137,7 +141,7 @@ class ApiHobbyController extends AbstractController
 // -------------------------------------
 
     /**
-     * Updating a dog via API put
+     * Updating a dog hobby via API put
      * @Route("/api/secure/dogs/{dog_id<\d+>}/hobby/{id<\d+>}", name="api_hobbies_update_item", methods={"PUT"})
      * @ParamConverter("dog", options={"mapping": {"dog_id": "id"}})
      */
