@@ -27,7 +27,7 @@ security:
             logout:
                 path: app_logout
                 # where to redirect after logout
-                # target: app_any_route
+                # target: app_back
 
         api:
             pattern:   ^/api
@@ -40,6 +40,8 @@ security:
             custom_authenticator: App\Security\LoginAuthenticator
             logout:
                 path: app_logout
+                # where to redirect after logout
+                target: app_back
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -52,10 +54,18 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+
+        #API paths
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api,       roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/secure,       roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/secure,roles: IS_AUTHENTICATED_FULLY }
+
+        #Back paths : All pages but home require ROLE_ADMIN
         - { path: ^/back/(main|member|dog), roles: ROLE_ADMIN }
+        - { path: ^/back/(member|dog)/new, roles: ROLE_ADMIN }   
+        - { path: ^/back/(member|dog)/\d+/edit, roles: ROLE_ADMIN }  
+        - { path: ^/back/(member|dog)/\d+, roles: ROLE_ADMIN, methods: [POST] }
+
 
     role_hierarchy:
         ROLE_ADMIN: ROLE_USER
