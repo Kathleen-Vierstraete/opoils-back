@@ -4,10 +4,12 @@
 
 {% block body %}
 
-<center><img src="{{ app.request.getBaseURL() }}/pictures/logo.png" width="150px"></center>
+<center><p><img src="{{ app.request.getBaseURL() }}/pictures/logo.png" width="150px"></p><br>
 
-    <h1>Bienvenu sur le backoffice de O'poils, veuillez vous connecter</h1><br>
+    <h1>Bienvenue sur le backoffice de O'Poils</h1>
+    
+    <h2>Veuillez vous connecter</h2><br>
 
-    <a href="{{ path('app_login') }}" class="btn btn-danger me-2">Connexion</a>
+    <a href="{{ path('app_login') }}" class="btn btn-danger me-2">Connexion</a></center>
 
 {% endblock %}
