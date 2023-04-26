@@ -37,6 +37,9 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            custom_authenticator: App\Security\LoginAuthenticator
+            logout:
+                path: app_logout
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -51,7 +54,7 @@ security:
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/back/(main|member|dog), roles: roles: ROLE_ADMIN }
+        - { path: ^/back/(main|member|dog), roles: ROLE_ADMIN }
 
     role_hierarchy:
         ROLE_ADMIN: ROLE_USER
