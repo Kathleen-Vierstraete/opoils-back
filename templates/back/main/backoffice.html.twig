@@ -1,0 +1,13 @@
+{% extends 'back/base_back.html.twig' %}
+
+{% block title %}Backoffice O'Poils{% endblock %}
+
+{% block body %}
+
+<center><img src="{{ app.request.getBaseURL() }}/pictures/logo.png" width="150px"></center>
+
+    <h1>Bienvenu sur le backoffice de O'poils, veuillez vous connecter</h1><br>
+
+    <a href="{{ path('app_login') }}" class="btn btn-danger me-2">Connexion</a>
+
+{% endblock %}

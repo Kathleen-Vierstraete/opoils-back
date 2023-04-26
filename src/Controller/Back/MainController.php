@@ -13,7 +13,15 @@ class MainController extends AbstractController
     /**
      * @Route("/back/", name="app_back")
      */
-    public function index(MemberRepository $memberRepository, DogRepository $dogRepository): Response
+    public function index(): Response
+    {
+        return $this->render('back/main/backoffice.html.twig');
+    }
+
+    /**
+     * @Route("/back/main", name="app_main_back")
+     */
+    public function main(MemberRepository $memberRepository, DogRepository $dogRepository): Response
     {
         return $this->render('back/main/index.html.twig', [
             'members' => $memberRepository->findAll(),
