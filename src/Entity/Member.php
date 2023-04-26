@@ -43,13 +43,13 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, nullable=true)
      * @Groups({"get_item", "get_member_item", "get_connected_member"})
      */
     private $lastname;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, nullable=true)
      * @Groups({"get_item", "get_member_item", "get_connected_member"})
      */
     private $firstname;
@@ -73,13 +73,13 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     private $adress;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, nullable=true)
      * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member", "get_dogs_collection"})
      */
     private $postal_code;
 
     /**
-     * @ORM\Column(type="string", length=35)
+     * @ORM\Column(type="string", length=35, nullable=true)
      * @Groups({"get_members_collection", "get_item", "get_member_item", "get_connected_member"})
      */
     private $city;
@@ -97,7 +97,7 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     private $dogs;
 
     /**
-     * @ORM\Column(type="string", length=65)
+     * @ORM\Column(type="string", length=65, nullable=true)
      * @Groups({"get_members_collection", "get_dogs_collection", "get_connected_member"})
      */
     private $slug;

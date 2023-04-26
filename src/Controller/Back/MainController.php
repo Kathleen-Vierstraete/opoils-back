@@ -2,6 +2,7 @@
 
 namespace App\Controller\Back;
 
+use App\Entity\Member;
 use App\Repository\DogRepository;
 use App\Repository\MemberRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,8 +15,13 @@ class MainController extends AbstractController
      * @Route("/back/", name="app_back")
      */
     public function index(): Response
-    {
-        return $this->render('back/main/backoffice.html.twig');
+    { /** @var \App\Entity\Member $member*/
+        $member = $this->getUser();
+
+        return $this->render('back/main/backoffice.html.twig', [
+            'member' => $member,
+        
+        ]);
     }
 
     /**

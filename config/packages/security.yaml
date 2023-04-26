@@ -63,10 +63,10 @@ security:
         - { path: ^/api/secure,roles: IS_AUTHENTICATED_FULLY }
 
         #Back paths : All pages but home require ROLE_ADMIN
-        - { path: ^/back/(main|member|dog), roles: ROLE_ADMIN }
-        - { path: ^/back/(member|dog)/new, roles: ROLE_ADMIN }   
-        - { path: ^/back/(member|dog)/\d+/edit, roles: ROLE_ADMIN }  
-        - { path: ^/back/(member|dog)/\d+, roles: ROLE_ADMIN, methods: [POST] }
+        - { path: ^/back/(main|member|dog|picture|hobby), roles: ROLE_ADMIN }
+        - { path: ^/back/(member|dog|picture|hobby)/new, roles: ROLE_ADMIN }   
+        - { path: ^/back/(member|dog|picture|hobby)/\d+/edit, roles: ROLE_ADMIN }  
+        - { path: ^/back/(member|dog|picture|hobby)/\d+, roles: ROLE_ADMIN, methods: [POST] }
 
 
     role_hierarchy:

@@ -12,7 +12,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
-
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ApiMemberController extends AbstractController
 {
@@ -171,7 +171,7 @@ class ApiMemberController extends AbstractController
      * 
      * @Route("/api/secure/members", name="api_members_post", methods={"POST"})
      */
-    public function createItem(Request $request, SerializerInterface $serializer, ManagerRegistry $doctrine, ValidatorInterface $validator)
+    public function createItem(Request $request, SerializerInterface $serializer, ManagerRegistry $doctrine, ValidatorInterface $validator, SluggerInterface $slugger)
     {
         // we get the JSON
         $jsonContent = $request->getContent();
@@ -197,6 +197,8 @@ class ApiMemberController extends AbstractController
                 Response::HTTP_UNPROCESSABLE_ENTITY,
             );
         }
+
+        $member->setSlug($slugger->slug($member->getUsername())->lower());
 
         // Saving the entity
         $entityManager = $doctrine->getManager();
