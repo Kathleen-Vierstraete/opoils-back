@@ -8,11 +8,13 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ApiMemberController extends AbstractController
 {
@@ -169,18 +171,19 @@ class ApiMemberController extends AbstractController
     /**
      * Creation of a member via API
      * 
-     * @Route("/api/secure/members", name="api_members_post", methods={"POST"})
+     * @Route("/api/secure/members", name="api_members_post", methods={"GET","POST"})
      */
-    public function createItem(Request $request, SerializerInterface $serializer, ManagerRegistry $doctrine, ValidatorInterface $validator, SluggerInterface $slugger)
+    public function createItem(Request $request, SerializerInterface $serializer, ManagerRegistry $doctrine, ValidatorInterface $validator, SluggerInterface $slugger, UserPasswordHasherInterface $userPasswordHasher): JsonResponse
     {
         // we get the JSON
         $jsonContent = $request->getContent();
 
 
+
         //managing errors
         try {
             //we deserialize (convert) the JSON into a Member entity
-            $member = $serializer->deserialize($jsonContent, Member::class, 'json');
+            $member = $serializer->deserialize($jsonContent, Member::class, 'json');            
         } catch (NotEncodableValueException $e) {
             return $this->json(
                 ["error" => 'JSON invalide'],
@@ -198,7 +201,21 @@ class ApiMemberController extends AbstractController
             );
         }
 
+        // password safety
+        if (!preg_match('/^(?=.*[A-Z])(?=.*\d)(?=.*[!@$!%*?&€()+])[A-Za-z\d!@$!%*?&€*()+]{8,}$/', $member->getPassword())) {
+            return new JsonResponse([
+            'error' => 'Le mot de passe doit contenir au moins 8 caractères, dont une majuscule, un chiffre et un caractère spécial.'
+            ], 
+            JsonResponse::HTTP_BAD_REQUEST);
+       }
+
+       // password hashing
+       $hashedPassword = $userPasswordHasher->hashPassword($member, $member->getPassword());
+       // save the hashed password 
+       $member->setPassword($hashedPassword);
+
         $member->setSlug($slugger->slug($member->getUsername())->lower());
+
 
         // Saving the entity
         $entityManager = $doctrine->getManager();
