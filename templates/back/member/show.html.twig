@@ -69,7 +69,11 @@
 <p><a class="btn btn-sm btn-info" href="{{ path('app_back_dog_show', {'id': dog.id}) }}">{{ dog.name }}</a></p>
 
 <p><img src="{{ app.request.getBaseURL() }}/uploads/pictures/{{ dog.mainPicture }}" width="200px"></p><br>
-                    
+
+{% else %}
+
+<p><strong>Aucun chien associé à ce membre</strong></p><br>
+
 {% endfor %}
                         
 <a class="btn btn-warning float-end" href="{{ path('app_back_dog_index') }}">Retour à la liste des chiens</a>

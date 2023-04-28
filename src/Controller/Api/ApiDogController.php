@@ -13,6 +13,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ApiDogController extends AbstractController
 {
@@ -63,7 +64,7 @@ class ApiDogController extends AbstractController
      * 
      * @Route("/api/secure/dogs", name="api_dogs_post", methods={"POST"})
      */
-    public function createItem(Request $request, SerializerInterface $serializer, ManagerRegistry $doctrine, ValidatorInterface $validator)
+    public function createItem(Request $request, SerializerInterface $serializer, ManagerRegistry $doctrine, ValidatorInterface $validator, SluggerInterface $slugger)
     {
         /** @var \App\Entity\Member $member*/
         $member = $this->getUser();
@@ -94,6 +95,7 @@ class ApiDogController extends AbstractController
             );
         }
 
+        $dog->setSlug($slugger->slug($dog->getName())->lower());
 
         // Saving the entity
         $dog->setMember($member);
@@ -122,7 +124,7 @@ class ApiDogController extends AbstractController
      * Updating a dog via API put
      * @Route("/api/secure/dogs/{id<\d+>}", name="api_dog_update_item", methods={"PUT"})
      */
-    public function updateItem(ManagerRegistry $doctrine, Request $request, SerializerInterface $serializer, ValidatorInterface $validatorInterface, Dog $dog = null)
+    public function updateItem(ManagerRegistry $doctrine, Request $request, SerializerInterface $serializer, ValidatorInterface $validatorInterface, SluggerInterface $slugger, Dog $dog = null)
     {
 
         /** @var \App\Entity\Member $member*/
@@ -148,6 +150,8 @@ class ApiDogController extends AbstractController
                     Response::HTTP_UNPROCESSABLE_ENTITY
                 );
             }
+
+            $dog->setSlug($slugger->slug($dog->getName())->lower());
 
             //we validate the gotten Member entity
             $errors = $validatorInterface->validate($dog);

@@ -244,7 +244,7 @@ class ApiMemberController extends AbstractController
      * Updating a member via API put
      * @Route("/api/secure/members/{id<\d+>}", name="api_member_update_item", methods={"PUT"})
      */
-    public function updateItem(ManagerRegistry $doctrine, Request $request, SerializerInterface $serializer, ValidatorInterface $validatorInterface, Member $member = null)
+    public function updateItem(ManagerRegistry $doctrine, Request $request, SerializerInterface $serializer, ValidatorInterface $validatorInterface, SluggerInterface $slugger, Member $member = null)
     {
 
         if (!$member) {
@@ -265,6 +265,8 @@ class ApiMemberController extends AbstractController
                     Response::HTTP_UNPROCESSABLE_ENTITY
                 );
             }
+
+            $member->setSlug($slugger->slug($member->getUsername())->lower());            
 
             //we validate the gotten Member entity
             $errors = $validatorInterface->validate($member);
