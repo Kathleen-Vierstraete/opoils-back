@@ -95,6 +95,7 @@ class ApiDogController extends AbstractController
             );
         }
 
+        
         $dog->setSlug($slugger->slug($dog->getName())->lower());
 
         // Saving the entity
