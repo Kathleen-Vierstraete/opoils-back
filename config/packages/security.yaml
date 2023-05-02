@@ -66,7 +66,7 @@ security:
         - { path: ^/back/(main|member|dog|picture|hobby), roles: ROLE_ADMIN }
         - { path: ^/back/(member|dog|picture|hobby)/new, roles: ROLE_ADMIN }   
         - { path: ^/back/(member|dog|picture|hobby)/\d+/edit, roles: ROLE_ADMIN }  
-        - { path: ^/back/(member|dog|picture|hobby)/\d+, roles: ROLE_ADMIN, methods: [POST] }
+        - { path: ^/back/(member|dog|picture|hobby)/\d+, roles: ROLE_ADMIN, methods: [POST, DELETE] }
 
 
     role_hierarchy:

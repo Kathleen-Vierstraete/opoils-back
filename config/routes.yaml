@@ -3,3 +3,9 @@
 #    controller: App\Controller\DefaultController::index
 api_login_check:
   path: /api/login_check
+
+
+api_post_edit:
+    path:       /api/posts/{id}
+    controller: App\Controller\BlogApiController::edit
+    methods:    PUT

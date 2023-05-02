@@ -123,7 +123,7 @@ class ApiDogController extends AbstractController
 
     /**
      * Updating a dog via API put
-     * @Route("/api/secure/dogs/{id<\d+>}", name="api_dog_update_item", methods={"PUT"})
+     * @Route("/api/secure/dogs/{slug}", name="api_dog_update_item", methods={"PUT"})
      */
     public function updateItem(ManagerRegistry $doctrine, Request $request, SerializerInterface $serializer, ValidatorInterface $validatorInterface, SluggerInterface $slugger, Dog $dog = null)
     {
@@ -131,7 +131,7 @@ class ApiDogController extends AbstractController
         /** @var \App\Entity\Member $member*/
         $member = $this->getUser();
 
-        dd($member);
+        // dd($member);
 
         if (!$dog) {
             return $this->json([
@@ -185,7 +185,8 @@ class ApiDogController extends AbstractController
 
      /**
      * Deleting a given dog
-     * @Route("/api/secure/dogs/{id<\d+>}", name="api_dog_delete_item", methods={"DELETE"})
+     * @param string $slug Slug of the dog to delete
+     * @Route("/api/secure/dogs/{slug}", name="api_dog_delete_item", methods={"DELETE"})
      */
     public function deleteItem (Dog $dog = null, ManagerRegistry $doctrine)
     {

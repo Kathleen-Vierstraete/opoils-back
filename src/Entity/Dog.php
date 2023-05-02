@@ -29,7 +29,7 @@ class Dog
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=2)
+     * @ORM\Column(type="integer", length=2)
      * @Groups({"get_dogs_collection", "get_members_collection", "get_item" , "get_dog_item", "get_connected_member"})
      */
     private $age;
