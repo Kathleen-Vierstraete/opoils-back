@@ -16,14 +16,14 @@ class Hobby
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"get_hobbies_collection", "get_connected_member", "get_dogs_collection"})
+     * @Groups({"get_hobbies_collection", "get_connected_member", "get_dogs_collection", "get_item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=64)
      * @Assert\NotBlank
-     * @Groups({"get_hobbies_collection", "get_connected_member", "get_dogs_collection"})
+     * @Groups({"get_hobbies_collection", "get_connected_member", "get_dogs_collection", "get_item"})
      */
     private $hobby;
 

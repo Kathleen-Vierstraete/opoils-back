@@ -77,20 +77,20 @@ class Dog
     /**
      * @ORM\Column(type="string", length=64)
      * @Assert\NotBlank
-     * @Groups({"get_dogs_collection", "get_members_collection", "get_connected_member"})
+     * @Groups({"get_dogs_collection", "get_members_collection", "get_connected_member", "get_item" })
      */
     private $size;
 
     /**
      * @ORM\Column(type="string", length=64)
      * @Assert\NotBlank
-     * @Groups({"get_dogs_collection", "get_members_collection", "get_connected_member"})
+     * @Groups({"get_dogs_collection", "get_members_collection", "get_connected_member", "get_item"})
      */
     private $personality;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"get_dogs_collection", "get_members_collection", "get_hobbies_collection", "get_pictures_collection", "get_item" , "get_dog_item", "get_connected_member"}) 
+     * @Groups({"get_dogs_collection", "get_members_collection", "get_item" , "get_dog_item", "get_connected_member"}) 
      */
     private $main_picture;
 
