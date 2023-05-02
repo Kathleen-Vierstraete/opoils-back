@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PictureRepository;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PictureRepository::class)
@@ -21,6 +22,7 @@ class Picture
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      * @Groups({"get_pictures_collection", "get_item", "get_connected_member", "get_dogs_collection"})
      */
     private $picture;

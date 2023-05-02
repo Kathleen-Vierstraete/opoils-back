@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\HobbyRepository;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=HobbyRepository::class)
@@ -21,6 +22,7 @@ class Hobby
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Assert\NotBlank
      * @Groups({"get_hobbies_collection", "get_connected_member", "get_dogs_collection"})
      */
     private $hobby;

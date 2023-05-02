@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -24,18 +25,21 @@ class Dog
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Assert\NotBlank
      * @Groups({"get_dogs_collection", "get_members_collection", "get_hobbies_collection", "get_pictures_collection", "get_item" , "get_dog_item", "get_connected_member"}) 
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer", length=2)
+     * @Assert\NotBlank
      * @Groups({"get_dogs_collection", "get_members_collection", "get_item" , "get_dog_item", "get_connected_member"})
      */
     private $age;
 
     /**
      * @ORM\Column(type="string", length=35)
+     * @Assert\NotBlank
      * @Groups({"get_dogs_collection", "get_members_collection", "get_item", "get_dog_item", "get_connected_member"})
      */
     private $race;
@@ -72,12 +76,14 @@ class Dog
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Assert\NotBlank
      * @Groups({"get_dogs_collection", "get_members_collection", "get_connected_member"})
      */
     private $size;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Assert\NotBlank
      * @Groups({"get_dogs_collection", "get_members_collection", "get_connected_member"})
      */
     private $personality;
