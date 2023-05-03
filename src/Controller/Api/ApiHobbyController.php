@@ -24,16 +24,20 @@ class ApiHobbyController extends AbstractController
      */
     public function index(HobbyRepository $hobbyRepository): Response
     {
+        //using method findAll() to find all hobbies
         $hobbiesList = $hobbyRepository->findAll();
         
+        //JSON response for API
         return $this->json(
-                            $hobbiesList,
-                            Response::HTTP_OK, [], 
-                            ['groups' => 'get_hobbies_collection']
-                        );
+            $hobbiesList,
+            Response::HTTP_OK, 
+            [], 
+            ['groups' => 'get_hobbies_collection']
+            );
 
     }
 
+// ---------------- END OF METHOD ---------------------
 
     /** 
      * return in JSON the list of all hobbies of a given dog
@@ -43,6 +47,7 @@ class ApiHobbyController extends AbstractController
     public function getHobbiesByDog(Dog $dog = null)
     {
 
+        // if dog doesn't exists : return an error message
         if(!$dog){
             return $this->json(
                 ['error' => 'Chien non trouvé'], 
@@ -53,10 +58,13 @@ class ApiHobbyController extends AbstractController
         // using the method getHobbies in the dog Entity thanks to the relation many to one
         $hobbiesByDog = $dog->getHobbies();
 
+        //creating a data array to return in JSON
         $data = [
             "dog" => $dog,
             "hobbies" => $hobbiesByDog
         ];
+
+        //JSON response for API        
         return $this->json(
             $data,
             Response::HTTP_OK,
@@ -71,6 +79,8 @@ class ApiHobbyController extends AbstractController
             ]);
     }
 
+// ---------------- END OF METHOD ---------------------
+
     /**
      * Creation of a hobby for a given dog via API
      * 
@@ -79,6 +89,7 @@ class ApiHobbyController extends AbstractController
     public function createItem(Request $request, SerializerInterface $serializer, ManagerRegistry $doctrine, ValidatorInterface $validator, Dog $dog = null)
     {
 
+        // if dog doesn't exists : return an error message
         if(!$dog){
             return $this->json(
                 ['error' => 'Chien non trouvé'], 
@@ -86,6 +97,7 @@ class ApiHobbyController extends AbstractController
             );
         }
 
+        //limiting the number of hobbies for a given dog
         if (count ($dog->getHobbies())===3){
             return $this->json(
                 ['error' => 'Limitation à 3 hobbies'], 
@@ -127,7 +139,6 @@ class ApiHobbyController extends AbstractController
         $entityManager->flush();
 
         // returning the answer
-
         return $this->json(
             // the created hobby
             $hobby,
@@ -138,7 +149,7 @@ class ApiHobbyController extends AbstractController
         );
     }
 
-// -------------------------------------
+// ---------------- END OF METHOD ---------------------
 
     /**
      * Updating a dog hobby via API put
@@ -148,6 +159,7 @@ class ApiHobbyController extends AbstractController
     public function updateItem(ManagerRegistry $doctrine, Request $request, SerializerInterface $serializer, ValidatorInterface $validatorInterface, Hobby $hobby = null, Dog $dog = null)
     {
 
+        // if dog doesn't exists : return an error message
         if (!$dog) {
             return $this->json([
                 'error' => "Chien non trouvé",
@@ -155,6 +167,7 @@ class ApiHobbyController extends AbstractController
             ]);
         } 
         
+        //if hobby doesn't exists : return an error message
         else if (!$hobby) {
             return $this->json([
                 'error' => "Hobby non trouvé",
@@ -186,30 +199,31 @@ class ApiHobbyController extends AbstractController
                 );
             }
 
+            //Saving the entity
             $entityManager = $doctrine->getManager();
             $entityManager->persist($hobby);
             $entityManager->flush();
 
+            //returning the answer
             return $this->json(
                 $hobby,
                 //The status code 204 : UPDATED
                 204,
-                [
-
-                ],
+                [],
                 ['groups' => 'get_item']
             );
         }
     }
 
-//------------------------------------    
-
+// ---------------- END OF METHOD ---------------------
+   
      /**
-     * Deleting a given dog
+     * Deleting a given hobby
      * @Route("/api/secure/hobby/{id<\d+>}", name="api_hobby_delete_item", methods={"DELETE"})
      */
     public function deleteItem (Hobby $hobby = null, ManagerRegistry $doctrine)
     {
+        //if hobby doesn't exists : return an error message
         if (!$hobby) {
             return $this->json(
                 ['error' => 'Hobby non trouvé'],
@@ -217,11 +231,15 @@ class ApiHobbyController extends AbstractController
                 );
             }
 
-            $entityManager = $doctrine->getManager();
-            $entityManager->remove($hobby);
-            $entityManager->flush();
-        
+        //removing the entity
+        $entityManager = $doctrine->getManager();
+        $entityManager->remove($hobby);
+        $entityManager->flush();
+
+        // returning the answer        
         return new Response(null, 204);
-    }    
+    }  
+    
+// ---------------- END OF METHOD ---------------------
     
 }

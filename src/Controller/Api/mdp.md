@@ -1,5 +1,7 @@
 ``` PHP
 
+//code example for security, with regex in API + password hash
+
 /**
      * @param Request $request
      * @param SerializerInterface $serializer

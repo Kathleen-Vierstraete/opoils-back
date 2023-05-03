@@ -25,8 +25,10 @@ class ApiMemberController extends AbstractController
      */
     public function getCollection(MemberRepository $memberRepository): Response
     {
+        //using method findAll() to find all members
         $membersList = $memberRepository->findAll();
 
+        //JSON response for API
         return $this->json(
             $membersList,
             Response::HTTP_OK,
@@ -34,6 +36,8 @@ class ApiMemberController extends AbstractController
             ['groups' => 'get_members_collection']
         );
     }
+
+// ---------------- END OF METHOD ---------------------
 
     /**
      * JSON request to get one given member
@@ -44,7 +48,7 @@ class ApiMemberController extends AbstractController
     public function getMemberItem(Member $member = null)
     {
 
-
+        // if member doesn't exists : return an error message
         if (!$member) {
             return $this->json(
                 ['error' => 'Membre non trouvé'],
@@ -52,6 +56,7 @@ class ApiMemberController extends AbstractController
             );
         }
 
+        //JSON response for API
         return $this->json(
             $member,
             200,
@@ -59,6 +64,8 @@ class ApiMemberController extends AbstractController
             ['groups' => 'get_member_item']
         );
     }
+
+// ---------------- END OF METHOD ---------------------
 
     /**
      * JSON request to get the connected member
@@ -68,74 +75,12 @@ class ApiMemberController extends AbstractController
      */
     public function getConnectedMember()
     {
+        //linking to connected member
         /** @var \App\Entity\Member $member*/
         $member = $this->getUser();
         //dd($member);
 
-/*         $data  = [];
-
-        $memberData = [];
-
-
-
-        $memberDogs = $member->getDogs();
-        // dd($memberDogs);
-
-        $dogs = [];
-
-        foreach ($memberDogs as $memberDog) {
-            $id = $memberDog->getId();
-            $name = $memberDog->getName();
-            $age = $memberDog->getAge();
-            $race = $memberDog->getRace();
-            $size = $memberDog->getSize();
-            $personality = $memberDog->getPersonality();
-            $presentation = $memberDog->getPresentation();
-            $slug = $memberDog->getSlug();
-
-            $dogPictures = $memberDog->getPictures();
-
-            $picturesArray = [];
-
-            foreach ($dogPictures as $dogPicture) {
-                $id = $dogPicture->getId();
-                $picture = $dogPicture->getPicture();
-
-
-                $picturesArray[] = [
-                    "id" => $id,
-                    "picture" => $picture,
-                ];
-            }
-
-            $dogHobbies = $memberDog->getHobbies();
-            $hobbiesArray = [];
-
-            foreach ($dogHobbies as $dogHobby) {
-                $id = $dogHobby->getId();
-                $hobby = $dogHobby->getHobby();
-
-
-                $hobbiesArray[] = [
-                    "id" => $id,
-                    "hobby" => $hobby,
-                ];
-            }
-
-            $dogs[] = [
-                "id" => $id,
-                "name" => $name,
-                "age" => $age,
-                "race" => $race,
-                "size" => $size,
-                "personality" => $personality,
-                "presentation" => $presentation,
-                "slug" => $slug,
-                "picturesArray" => $picturesArray,
-                "hobbiesArray" => $hobbiesArray
-            ];
-        }; */
-
+        //defining intermediate proprieties
         $lastname = $member->getLastname();
         $firstname = $member->getFirstname();
         $username = $member->getUsername();
@@ -144,7 +89,7 @@ class ApiMemberController extends AbstractController
         $slug = $member->getSlug();
         $memberPicture = $member->getPicture();
         
-
+        //creating an array for a better reading for front
         $memberData[] = [
             "lastname" => $lastname,
             "firstname" => $firstname,
@@ -155,11 +100,13 @@ class ApiMemberController extends AbstractController
             "memberPicture" => $memberPicture,
         ]; 
 
+        //putting the infos in a data array
         $data = [
             "memberData" => $memberData,
             "dogs" => $member->getDogs(),
         ];
 
+        //JSON response for API
         return $this->json(
             $data,
             Response::HTTP_OK,
@@ -167,6 +114,8 @@ class ApiMemberController extends AbstractController
             ['groups' => 'get_connected_member']
         );
     }
+
+// ---------------- END OF METHOD ---------------------
 
     /**
      * Creation of a member via API
@@ -177,8 +126,6 @@ class ApiMemberController extends AbstractController
     {
         // we get the JSON
         $jsonContent = $request->getContent();
-
-
 
         //managing errors
         try {
@@ -209,13 +156,13 @@ class ApiMemberController extends AbstractController
             JsonResponse::HTTP_BAD_REQUEST);
        }
 
-       // password hashing
-       $hashedPassword = $userPasswordHasher->hashPassword($member, $member->getPassword());
-       // save the hashed password 
-       $member->setPassword($hashedPassword);
+        // password hashing
+        $hashedPassword = $userPasswordHasher->hashPassword($member, $member->getPassword());
+        // save the hashed password 
+        $member->setPassword($hashedPassword);
 
+        //setting the slug thanks to the username
         $member->setSlug($slugger->slug($member->getUsername())->lower());
-
 
         // Saving the entity
         $entityManager = $doctrine->getManager();
@@ -223,7 +170,6 @@ class ApiMemberController extends AbstractController
         $entityManager->flush();
 
         // returning the answer
-
         return $this->json(
             // the created member
             $member,
@@ -237,8 +183,7 @@ class ApiMemberController extends AbstractController
         );
     }
 
-
-
+// ---------------- END OF METHOD ---------------------
 
     /**
      * Updating a member via API put
@@ -247,6 +192,7 @@ class ApiMemberController extends AbstractController
     public function updateItem(ManagerRegistry $doctrine, Request $request, SerializerInterface $serializer, ValidatorInterface $validatorInterface, SluggerInterface $slugger, Member $member = null)
     {
 
+        // if member doesn't exists : return an error message
         if (!$member) {
             return $this->json([
                 'error' => "Membre non trouvé",
@@ -265,37 +211,39 @@ class ApiMemberController extends AbstractController
                     Response::HTTP_UNPROCESSABLE_ENTITY
                 );
             }
+        //setting the slug thanks to the username
+        $member->setSlug($slugger->slug($member->getUsername())->lower());            
 
-            $member->setSlug($slugger->slug($member->getUsername())->lower());            
+        //we validate the gotten Member entity
+        $errors = $validatorInterface->validate($member);
 
-            //we validate the gotten Member entity
-            $errors = $validatorInterface->validate($member);
-
-            if (count($errors) > 0) {
-                return $this->json(
-                    $errors,
-                    Response::HTTP_UNPROCESSABLE_ENTITY
-                );
-            }
-
-            $entityManager = $doctrine->getManager();
-            $entityManager->persist($member);
-            $entityManager->flush();
-
+        if (count($errors) > 0) {
             return $this->json(
-                $member,
-                //The status code 204 : UPDATED
-                204,
-                [
-                    // Location = /api/members (for redirection to all members url)
-                    'Location' => $this->generateUrl('app_api_members',)
-                ],
-                ['groups' => 'get_item']
+                $errors,
+                Response::HTTP_UNPROCESSABLE_ENTITY
             );
+        }
+
+        // Saving the entity
+        $entityManager = $doctrine->getManager();
+        $entityManager->persist($member);
+        $entityManager->flush();
+
+        // returning the answer        
+        return $this->json(
+            $member,
+            //The status code 204 : UPDATED
+            204,
+            [
+                // Location = /api/members (for redirection to all members url)
+                'Location' => $this->generateUrl('app_api_members',)
+            ],
+            ['groups' => 'get_item']
+        );
         }
     }
 
-    //------------------------------------    
+// ---------------- END OF METHOD ---------------------
 
     /**
      * Deleting a given member
@@ -303,6 +251,7 @@ class ApiMemberController extends AbstractController
      */
     public function deleteItem(Member $member = null, ManagerRegistry $doctrine)
     {
+        // if member doesn't exists : return an error message
         if (!$member) {
             return $this->json(
                 ['error' => 'Membre non trouvé'],
@@ -310,10 +259,16 @@ class ApiMemberController extends AbstractController
             );
         }
 
+        //removing the entity
         $entityManager = $doctrine->getManager();
         $entityManager->remove($member);
         $entityManager->flush();
 
+        // returning the answer
         return new Response(null, 204);
     }
+    
+// ---------------- END OF METHOD ---------------------
+
+
 }

@@ -1,5 +1,7 @@
 <?php
 
+//automatically uploaded file for login and log out
+
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

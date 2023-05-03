@@ -24,8 +24,10 @@ class ApiDogController extends AbstractController
      */
     public function index(DogRepository $dogRepository): Response
     {
+        //using method findAll() to find all dogs 
         $dogsList = $dogRepository->findAll();
 
+        //JSON response for API
         return $this->json(
             $dogsList,
             Response::HTTP_OK,
@@ -33,6 +35,8 @@ class ApiDogController extends AbstractController
             ['groups' => 'get_dogs_collection']
         );
     }
+
+// ---------------- END OF METHOD ---------------------
 
     /**
      * JSON request to get one given member
@@ -43,6 +47,7 @@ class ApiDogController extends AbstractController
     public function getDogItem(Dog $dog = null)
     {
 
+        // if dog doesn't exists : return an error message
         if (!$dog) {
             return $this->json(
                 ['error' => 'Chien non trouvé'],
@@ -50,6 +55,7 @@ class ApiDogController extends AbstractController
             );
         }
 
+        //if given dog is found, JSON response for API
         return $this->json(
             $dog,
             200,
@@ -58,6 +64,7 @@ class ApiDogController extends AbstractController
         );
     }
 
+// ---------------- END OF METHOD ---------------------    
 
     /**
      * Creation of a dog via API
@@ -66,6 +73,7 @@ class ApiDogController extends AbstractController
      */
     public function createItem(Request $request, SerializerInterface $serializer, ManagerRegistry $doctrine, ValidatorInterface $validator, SluggerInterface $slugger)
     {
+        //linking to connected member
         /** @var \App\Entity\Member $member*/
         $member = $this->getUser();
         // dd($member);
@@ -95,7 +103,7 @@ class ApiDogController extends AbstractController
             );
         }
 
-        
+        //setting the slug as we create a dog
         $dog->setSlug($slugger->slug($dog->getName())->lower());
 
         // Saving the entity
@@ -105,7 +113,6 @@ class ApiDogController extends AbstractController
         $entityManager->flush();
 
         // returning the answer
-
         return $this->json(
             // the created dog
             $dog,
@@ -119,20 +126,22 @@ class ApiDogController extends AbstractController
         );
     }
 
-    // -------------------------------------
+// ---------------- END OF METHOD ---------------------
 
     /**
      * Updating a dog via API put
+     * @param string $slug Slug of the dog to update
      * @Route("/api/secure/dogs/{slug}", name="api_dog_update_item", methods={"PUT"})
      */
     public function updateItem(ManagerRegistry $doctrine, Request $request, SerializerInterface $serializer, ValidatorInterface $validatorInterface, SluggerInterface $slugger, Dog $dog = null)
     {
-
+        //linking to connected member
         /** @var \App\Entity\Member $member*/
         $member = $this->getUser();
 
         // dd($member);
 
+        // if the dog doesn't exists, return an error
         if (!$dog) {
             return $this->json([
                 'error' => "Chien non trouvé",
@@ -152,6 +161,7 @@ class ApiDogController extends AbstractController
                 );
             }
 
+            //setting the slug if the name is updated
             $dog->setSlug($slugger->slug($dog->getName())->lower());
 
             //we validate the gotten Member entity
@@ -164,10 +174,12 @@ class ApiDogController extends AbstractController
                 );
             }
 
+            // Saving the entity
             $entityManager = $doctrine->getManager();
             $entityManager->persist($dog);
             $entityManager->flush();
 
+            // returning the answer
             return $this->json(
                 $dog,
                 //The status code 204 : UPDATED
@@ -181,7 +193,7 @@ class ApiDogController extends AbstractController
         }
     }
 
-//------------------------------------    
+// ---------------- END OF METHOD ---------------------   
 
      /**
      * Deleting a given dog
@@ -190,6 +202,7 @@ class ApiDogController extends AbstractController
      */
     public function deleteItem (Dog $dog = null, ManagerRegistry $doctrine)
     {
+        // if the dog doesn't exists, return an error
         if (!$dog) {
             return $this->json(
                 ['error' => 'Chien non trouvé'],
@@ -197,10 +210,15 @@ class ApiDogController extends AbstractController
                 );
             }
 
-            $entityManager = $doctrine->getManager();
-            $entityManager->remove($dog);
-            $entityManager->flush();
+        //removing the entity
+        $entityManager = $doctrine->getManager();
+        $entityManager->remove($dog);
+        $entityManager->flush();
         
+        // returning the answer
         return new Response(null, 204);
     }
+
+// ---------------- END OF METHOD ---------------------
+
 }

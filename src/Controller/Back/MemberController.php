@@ -20,27 +20,36 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class MemberController extends AbstractController
 {
     /**
+     * Route to display all dogs
+     * 
      * @Route("/", name="app_back_member_index", methods={"GET"})
      */
     public function index(MemberRepository $memberRepository): Response
     {
+        //returning a render as a 'twig view'
         return $this->render('back/member/index.html.twig', [
+            //finding all members
             'members' => $memberRepository->findAll(),
         ]);
     }
 
+// ---------------- END OF METHOD ---------------------
+
     /**
+     * Route to create a new member
+     * 
      * @Route("/new", name="app_back_member_new", methods={"GET", "POST"})
      */
     public function new(Request $request, SluggerInterface $slugger, MemberRepository $memberRepository, UserPasswordHasherInterface $userPasswordHasher ): Response
     {
+        //creating the entity via the form 
         $member = new Member();
         $form = $this->createForm(MemberType::class, $member);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-// GESTION PASSWORD
+    // ---------------- MANAGING THE PASSWORD HASH ---------------------
 
             //hashing the password beforehead
             $hashedPassword = $userPasswordHasher->hashPassword($member , $member->getPassword());
@@ -48,7 +57,9 @@ class MemberController extends AbstractController
             //defining the member's password with the hashed password
             $member->setPassword($hashedPassword);
 
-// GESTION FILES MEDIA
+    // ---------------- END OF PASSWORD HASH MANAGEMENT ---------------------
+
+    // ---------------- MANAGING THE FILE UPLOAD ---------------------
 
     /** @var UploadedFile $pictureFile */
     $pictureFile = $form->get('picture')->getData();
@@ -79,42 +90,57 @@ class MemberController extends AbstractController
 
             // ... persist the $member variable or any other work
 
-// END FILES
+    // ---------------- END OF MANAGING THE FILE UPLOAD ---------------------
 
+            //setting the slug thanks to the username
             $member->setSlug($slugger->slug($member->getUsername())->lower());
 
+            //saving the entity
             $memberRepository->add($member, true);
 
+            //redirection route 
             return $this->redirectToRoute('app_back_member_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        // returning a render as a 'twig form'
         return $this->renderForm('back/member/new.html.twig', [
             'member' => $member,
             'form' => $form,
         ]);
     }
 
+// ---------------- END OF METHOD ---------------------    
+
     /**
+     * Route to display a given member
+     * 
      * @Route("/{id}", name="app_back_member_show", methods={"GET"})
      */
     public function show(Member $member): Response
     {
+        // returning a render as a 'twig view'
         return $this->render('back/member/show.html.twig', [
             'member' => $member,
         ]);
     }
 
+// ---------------- END OF METHOD ---------------------   
+
     /**
+     * Route to edit a member entity
+     * 
      * @Route("/{id}/edit", name="app_back_member_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Member $member, SluggerInterface $slugger, MemberRepository $memberRepository, UserPasswordHasherInterface $userPasswordHasher): Response
     {
+        //retrieving the entity via the form 
         $form = $this->createForm(MemberType::class, $member);
         //dd($form);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            //retrieving the password
             $newPassword = $form->get('password')->getData();
 
             //dd($newPassword);
@@ -125,10 +151,10 @@ class MemberController extends AbstractController
                 $member->setPassword($hashedPassword);
             }
 
-// GESTION FILES MEDIA
+    // ---------------- MANAGING THE FILE UPLOAD ---------------------
 
-    /** @var UploadedFile $pictureFile */
-    $pictureFile = $form->get('picture')->getData();
+        /** @var UploadedFile $pictureFile */
+        $pictureFile = $form->get('picture')->getData();
 
             // this condition is needed because the 'picture' field is not required
             // so the PDF file must be processed only when a file is uploaded
@@ -156,31 +182,45 @@ class MemberController extends AbstractController
 
             // ... persist the $member variable or any other work
 
-// END FILES            
+    // ---------------- END OF MANAGING THE FILE UPLOAD ---------------------           
 
+            //setting the slug thanks to the member's username
             $member->setSlug($slugger->slug($member->getUsername())->lower());
 
+            //saving the entity
             $memberRepository->add($member, true);
 
+            //redirection route
             return $this->redirectToRoute('app_back_member_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        // returning a render as a 'twig form'
         return $this->renderForm('back/member/edit.html.twig', [
             'member' => $member,
             'form' => $form,
         ]);
     }
 
+// ---------------- END OF METHOD ---------------------   
 
     /**
+     * Route to delete a given member
+     * 
      * @Route("/{id}", name="app_back_member_delete", methods={"POST"})
      */
     public function delete(Request $request, Member $member, MemberRepository $memberRepository): Response
     {
+        //making sure to get the token
         if ($this->isCsrfTokenValid('delete'.$member->getId(), $request->request->get('_token'))) {
+
+            //deleting the entity            
             $memberRepository->remove($member, true);
         }
 
+        //redirection route
         return $this->redirectToRoute('app_back_member_index', [], Response::HTTP_SEE_OTHER);
     }
+
+// ---------------- END OF METHOD ---------------------   
+ 
 }

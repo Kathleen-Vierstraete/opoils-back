@@ -24,8 +24,10 @@ class ApiPictureController extends AbstractController
      */
     public function index(PictureRepository $pictureRepository): Response
     {
+        //using method findAll() to find all pictures
         $picturesList = $pictureRepository->findAll();
 
+        //JSON response for API
         return $this->json(
             $picturesList,
             Response::HTTP_OK,
@@ -34,6 +36,7 @@ class ApiPictureController extends AbstractController
         );
     }
 
+// ---------------- END OF METHOD ---------------------
 
     /** 
      * return in JSON the list of all pictures of a given dog
@@ -43,6 +46,7 @@ class ApiPictureController extends AbstractController
     public function getPicturesByDog(Dog $dog = null)
     {
 
+        // if dog doesn't exists : return an error message
         if (!$dog) {
             return $this->json(
                 ['error' => 'Chien non trouvé'],
@@ -50,14 +54,16 @@ class ApiPictureController extends AbstractController
             );
         }
 
-
         // using the method getPictures in the dog Entity thanks to the relation many to one
         $picturesByDog = $dog->getPictures();
 
+        //creating a data array to return in JSON
         $data = [
             "dog" => $dog,
             "pictures" => $picturesByDog
         ];
+
+        //JSON response for API   
         return $this->json(
             $data,
             Response::HTTP_OK,
@@ -73,16 +79,17 @@ class ApiPictureController extends AbstractController
         );
     }
 
-// ------------------------------------    
+// ---------------- END OF METHOD --------------------- 
 
     /**
-     * Creation of a pictures for a given dog via API
+     * Creation of a picture for a given dog via API
      * 
      * @Route("/api/secure/dogs/{id<\d+>}/pictures", name="api_pictures_post", methods={"POST"})
      */
     public function createItem(Request $request, SerializerInterface $serializer, ManagerRegistry $doctrine, ValidatorInterface $validator, Dog $dog = null)
     {
 
+        // if dog doesn't exists : return an error message
         if(!$dog){
             return $this->json(
                 ['error' => 'Chien non trouvé'], 
@@ -90,6 +97,7 @@ class ApiPictureController extends AbstractController
             );
         }
 
+        //limiting the number of pictures for a given dog
         if (count ($dog->getPictures())===3){
             return $this->json(
                 ['error' => 'Limitation à 3 photos'], 
@@ -131,7 +139,6 @@ class ApiPictureController extends AbstractController
         $entityManager->flush();
 
         // returning the answer
-
         return $this->json(
             // the created picture
             $picture,
@@ -145,8 +152,7 @@ class ApiPictureController extends AbstractController
         );
     }    
 
-// ------------------------------------------
-
+// ---------------- END OF METHOD --------------------- 
 
     /**
      * Updating a dog via API put
@@ -156,6 +162,7 @@ class ApiPictureController extends AbstractController
     public function updateItem(ManagerRegistry $doctrine, Request $request, SerializerInterface $serializer, ValidatorInterface $validatorInterface, Picture $picture = null, Dog $dog = null)
     {
 
+        // if dog doesn't exists : return an error message
         if (!$dog) {
             return $this->json([
                 'error' => "Chien non trouvé",
@@ -163,6 +170,7 @@ class ApiPictureController extends AbstractController
             ]);
         } 
         
+        //if hobby doesn't exists : return an error message
         else if (!$picture) {
             return $this->json([
                 'error' => "Photo non trouvée",
@@ -194,30 +202,31 @@ class ApiPictureController extends AbstractController
                 );
             }
 
+            //Saving the entity
             $entityManager = $doctrine->getManager();
             $entityManager->persist($picture);
             $entityManager->flush();
 
+            //returning the answer
             return $this->json(
                 $picture,
                 //The status code 204 : UPDATED
                 204,
-                [
-                    
-                ],
+                [],
                 ['groups' => 'get_item']
             );
         }
     }
 
-//------------------------------------    
+// ---------------- END OF METHOD ---------------------  
 
      /**
-     * Deleting a given dog
+     * Deleting a given picture
      * @Route("/api/secure/picture/{id<\d+>}", name="api_picture_delete_item", methods={"DELETE"})
      */
     public function deleteItem (Picture $picture = null, ManagerRegistry $doctrine)
     {
+        //if picture doesn't exists : return an error message
         if (!$picture) {
             return $this->json(
                 ['error' => 'Photo non trouvée'],
@@ -225,11 +234,15 @@ class ApiPictureController extends AbstractController
                 );
             }
 
-            $entityManager = $doctrine->getManager();
-            $entityManager->remove($picture);
-            $entityManager->flush();
-        
-        return new Response(null, 204);
-    }        
+        //removing the entity
+        $entityManager = $doctrine->getManager();
+        $entityManager->remove($picture);
+        $entityManager->flush();
 
+        // returning the answer 
+        return new Response(null, 204);
+    }  
+    
+// ---------------- END OF METHOD ---------------------  
+    
 }
