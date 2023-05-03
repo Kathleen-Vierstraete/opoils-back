@@ -23,3 +23,19 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+parameters:
+    app.site_host: '%env(SITE_HOST)%'
+    app.public_folder_name: '%env(PUBLIC_FOLDER_NAME)%'
+
+App\Controller\ReactController:
+    arguments:
+        $publicFolderName: '%app.public_folder_name%'
+App\Service\Service1:
+    arguments:
+        $siteHost: '%app.site_host%'
+        $publicFolderName: '%app.public_folder_name%'
+App\Service\Service2:
+    arguments:
+        $siteHost: '%app.site_host%'
+        $publicFolderName: '%app.public_folder_name%'    

@@ -4,12 +4,14 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-
-        <script defer src="{{ asset('js/178.7261f6d80eb461540d8d.js') }}"></script>
-        <script defer src="{{ asset('js/178.7261f6d80eb461540d8d.js') }}"></script>
-        <script defer src="{{ asset('js/main.35b1bd63ae584b626970.js') }}"></script>
-        <script defer src="{{ asset('js/runtime.2bd7715c57eb99dd680e.js') }}"></script>        
+        {% for cssFile in cssFiles %}
+            <link rel="stylesheet" href="{{ asset('css/' ~ cssFile) }}">
+        {% endfor %}
+        {% block javascripts %}
+            {% for jsFile in jsFiles %}
+            <script defer src="{{ asset('js/' ~ jsFile) }}"></script>      
+            {% endfor %}
+        {% endblock %}
     </head>
     <body>
         <div id="root"></div>
