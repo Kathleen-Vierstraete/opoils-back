@@ -42,7 +42,7 @@
             </tr>
             <tr>    
                 <th>Photo de profil</th>
-                <td><img src="{{ app.request.getBaseURL() }}/uploads/pictures/{{ dog.mainPicture }}" width="200px"></td>
+                <td><img src="{{ app.request.getBaseURL() }}/assets/assets/uploads/pictures/{{ dog.mainPicture }}" width="200px"></td>
             </tr>               
         </tbody>
     </table>
@@ -82,7 +82,7 @@
             <tr>
                 <td>
                     {% for picture in dog.pictures %}
-                        <img src="{{ app.request.getBaseURL() }}/uploads/pictures/{{ picture.picture }}" width="200px">                        
+                        <img src="{{ app.request.getBaseURL() }}/assets/uploads/pictures/{{ picture.picture }}" width="200px">                        
                     {% endfor %}</td>
             </tr>
         </tbody>

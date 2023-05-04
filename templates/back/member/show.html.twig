@@ -55,7 +55,7 @@
             </tr>
             <tr>
                 <th>Photo de profil</th>
-                <td><img src="{{ app.request.getBaseURL() }}/uploads/pictures/{{ member.picture }}" width="150px"></td>
+                <td><img src="{{ app.request.getBaseURL() }}/assets/uploads/pictures/{{ member.picture }}" width="150px"></td>
             </tr>
         </tbody>
     </table>
@@ -68,7 +68,7 @@
 
 <p><a class="btn btn-sm btn-info" href="{{ path('app_back_dog_show', {'id': dog.id}) }}">{{ dog.name }}</a></p>
 
-<p><img src="{{ app.request.getBaseURL() }}/uploads/pictures/{{ dog.mainPicture }}" width="200px"></p><br>
+<p><img src="{{ app.request.getBaseURL() }}/assets/uploads/pictures/{{ dog.mainPicture }}" width="200px"></p><br>
 
 {% else %}
 

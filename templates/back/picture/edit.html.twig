@@ -7,7 +7,7 @@
 
     <p>La photo actuelle</p>
 
-    <p><img src="{{ app.request.getBaseURL() }}/uploads/pictures/{{ picture.picture }}" width="150px"></p>
+    <p><img src="{{ app.request.getBaseURL() }}/assets/uploads/pictures/{{ picture.picture }}" width="150px"></p>
 
     {{ include('back/picture/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 

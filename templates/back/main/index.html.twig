@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<center><img src="{{ app.request.getBaseURL() }}/pictures/logo.png" width="150px"></center>
+<center><img src="{{ app.request.getBaseURL() }}/assets/pictures/logo.png" width="150px"></center>
 
     <h1>Liste des derniers membres ajoutés</h1><br>
 
@@ -30,7 +30,7 @@
                 <td>{{ member.email }}</td>
                 <td>{{ member.postalCode }}</td>
                 <td>{{ member.city }}</td>
-                <td><img src="{{ app.request.getBaseURL() }}/uploads/pictures/{{ member.picture }}" width="150px"></td>          
+                <td><img src="{{ app.request.getBaseURL() }}/assets/uploads/pictures/{{ member.picture }}" width="150px"></td>          
                 <td>
                     <a class="btn btn-sm btn-info" href="{{ path('app_back_member_show', {'id': member.id}) }}">Voir</a> 
                     <a class="btn btn-sm btn-secondary" href="{{ path('app_back_member_edit', {'id': member.id}) }}">Editer</a>
@@ -67,7 +67,7 @@
                 <td>{{ dog.age }} ans</td>
                 <td>{{ dog.race }}</td>
                 <td>{{ dog.member.username }}</td>
-                <td><img src="{{ app.request.getBaseURL() }}/uploads/pictures/{{ dog.mainPicture }}" width="150px"></td>
+                <td><img src="{{ app.request.getBaseURL() }}/assets/uploads/pictures/{{ dog.mainPicture }}" width="150px"></td>
                 <td>
                     <a class="btn btn-sm btn-info" href="{{ path('app_back_dog_show', {'id': dog.id}) }}">Voir</a>
                     <a class="btn btn-sm btn-secondary" href="{{ path('app_back_dog_edit', {'id': dog.id}) }}">Editer</a>

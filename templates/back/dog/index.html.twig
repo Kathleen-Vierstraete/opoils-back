@@ -39,7 +39,7 @@
 
                 <td>
                     {% for picture in dog.pictures %}
-                        <img src="{{ app.request.getBaseURL() }}/uploads/pictures/{{ picture.picture }}" width="100px"><br><br>
+                        <img src="{{ app.request.getBaseURL() }}/assets/uploads/pictures/{{ picture.picture }}" width="100px"><br><br>
                         
                     {% endfor %}
                     <a class="btn btn-sm btn-primary" href="{{ path('app_back_picture_indexpictures', {'id': dog.id}) }}">Editer les photos</a>
