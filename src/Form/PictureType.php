@@ -26,6 +26,7 @@ class PictureType extends AbstractType
                         'mimeTypes' => [
                             'image/jpg',
                             'image/jpeg',
+                            'image/png',
                         ],
                         'mimeTypesMessage' => 'Merci de choisir un format d\'image valide',
                     ])

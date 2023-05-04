@@ -22,7 +22,6 @@ class Picture
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
      * @Groups({"get_pictures_collection", "get_item", "get_connected_member", "get_dogs_collection"})
      */
     private $picture;
