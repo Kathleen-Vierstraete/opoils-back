@@ -1,0 +1,29 @@
+{% extends 'back/base_back.html.twig' %}
+
+{% block title %}Backoffice O'Poils{% endblock %}
+
+{% block body %}
+
+<center><p><img src="{{ app.request.getBaseURL() }}/assets/pictures/logo.png" width="150px"></p><br>
+
+    <h1>Bienvenue sur le backoffice de O'Poils</h1><br><br>
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+    <h2>Bonjour <strong>{{ member.username }}</strong></h2><br><br>
+    
+    <h3>Vous pouvez vous déconnecter si vous avez terminé</h3><br>
+
+    <a href="{{ path('app_logout') }}" class="btn btn-danger me-2">Déconnexion</a>
+
+    {% else %}
+
+    <h2>Veuillez vous connecter</h2><br>
+
+    <a href="{{ path('app_login') }}" class="btn btn-danger me-2">Connexion</a>
+
+    {% endif %}
+
+    </center>
+
+{% endblock %}

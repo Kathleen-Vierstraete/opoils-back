@@ -1,0 +1,11 @@
+{% extends 'back/base_back.html.twig' %}
+
+{% block title %}Ajouter nouveau hobby pour {{ dog.name }}{% endblock %}
+
+{% block body %}
+    <h1>Ajouter nouveau hobby pour {{ dog.name }}</h1>
+
+    {{ include('back/hobby/_form.html.twig') }}
+
+    <a class="btn btn-warning float-end" href="{{ path('app_back_hobby_indexhobbies', {'id': dog.id}) }}">Retour aux hobbies de {{ dog.name }} </a>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'back/base_back.html.twig' %}
+
+{% block title %}Editer le chien{% endblock %}
+
+{% block body %}
+    <h1>Editer le chien</h1>
+
+    {{ include('back/dog/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    <a class="btn btn-warning float-end" href="{{ path('app_back_dog_index') }}">Retour à la liste</a>
+
+    {{ include('back/dog/_delete_form.html.twig') }}
+{% endblock %}

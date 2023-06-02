@@ -1,0 +1,44 @@
+{% extends 'back/base_back.html.twig' %}
+
+{% block title %}Hobbies Index{% endblock %}
+
+{% block body %}
+    <h1>Hobbies de {{ dog.name }}</h1>
+
+    <table class="table table-hover ">
+        <thead class="table-warning">
+            <tr>
+                <th>Id</th>
+                <th>Hobbies</th>
+                <th>Actions</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for hobby in hobbies %}
+            <tr>
+                <td>{{ hobby.id }}</td>
+                <td>{{ hobby.hobby }}</td>
+                <td>
+                    <a class="btn btn-sm btn-secondary" href="{{ path('app_back_hobby_edit', {'id': hobby.id, dog_id: hobby.dog.id}) }}">Editer le hobby</a>
+                    {{ include('back/hobby/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+<p><a class="btn btn-success" href="{{ path('app_back_hobby_new', {id: dog.id}) }}">Ajouter un nouveau hobby</a></p>   
+
+<a class="btn btn-warning float-end" href="{{ path('app_back_dog_index') }}">Retour à la liste des chiens</a>
+
+<p><a class="btn btn-warning " href="{{ path('app_back_dog_show', {'id': dog.id}) }}">Retour au profil de {{ dog.name }} </a></p><br>  
+
+      
+
+
+{% endblock %}

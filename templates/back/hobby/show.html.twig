@@ -1,0 +1,26 @@
+{% extends 'back/base_back.html.twig' %}
+
+{% block title %}Hobby de {{ dog.name }}{% endblock %}
+
+{% block body %}
+    <h1>Hobby de {{ dog.name }}</h1><br>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ hobby.id }}</td>
+            </tr>
+            <tr>
+                <th>Hobby</th>
+                <td>{{ hobby.hobby }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-warning float-end" href="{{ path('app_back_hobby_indexhobbies', {'id': dog.id}) }}">Retour à la liste</a>
+
+    <a class="btn btn-secondary m-1" href="{{ path('app_back_hobby_edit', {'id': hobby.id, dog_id: dog.id}) }}">Editer</a>
+
+    {{ include('back/hobby/_delete_form.html.twig') }}
+{% endblock %}

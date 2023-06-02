@@ -1,0 +1,99 @@
+{% extends 'back/base_back.html.twig' %}
+
+{% block title %}Fiche de {{ dog.name }}{% endblock %}
+
+{% block body %}
+    <h1>Fiche de {{ dog.name }}</h1><br>
+
+    <h3>Profil général</h3>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ dog.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ dog.name }}</td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td>{{ dog.age }} ans</td>
+            </tr>
+            <tr>
+                <th>Race</th>
+                <td>{{ dog.race }}</td>
+            </tr>
+            <tr>
+                <th>Présentation</th>
+                <td>{{ dog.presentation }}</td>
+            </tr>
+            <tr>
+                <th>Propriétaire</th>
+                <td><a class="btn btn-info" href="{{ path('app_back_member_show', {'id': dog.member.id}) }}">{{ dog.member.username }}</a></td>
+            </tr>
+                <th>Taille</th>
+                <td>{{ dog.size }}</td>
+            </tr>
+            <tr>
+                <th>Caractère</th>
+                <td>{{ dog.personality }}</td>
+            </tr>
+            <tr>    
+                <th>Photo de profil</th>
+                <td><img src="{{ app.request.getBaseURL() }}/assets/uploads/pictures/{{ dog.mainPicture }}" width="200px"></td>
+            </tr>               
+        </tbody>
+    </table>
+
+    <p><a class="btn btn-secondary m-1" href="{{ path('app_back_dog_edit', {'id': dog.id}) }}">Editer le profil général</a></p><br>    
+
+    <h3>Ses hobbies</h3>
+    <p>(3 maximum)</p>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Hobbies</th>
+            </tr>
+
+            <tr>
+                <td>{% for hobby in dog.hobbies %}
+                    <ul>
+                        <li> {{ hobby }}</li>
+                    </ul>
+                {% endfor %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+<p><a class="btn btn-secondary m-1" href="{{ path('app_back_hobby_indexhobbies', {'id': dog.id}) }}">Editer les hobbies</a></p><br>
+
+    <h3>Ses photos</h3>
+    <p>(3 maximum)</p>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Photos</th>
+            </tr>
+
+            <tr>
+                <td>
+                    {% for picture in dog.pictures %}
+                        <img src="{{ app.request.getBaseURL() }}/assets/uploads/pictures/{{ picture.picture }}" width="200px">                        
+                    {% endfor %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+<p><a class="btn btn-secondary m-1" href="{{ path('app_back_picture_indexpictures', {'id': dog.id}) }}">Editer les photos</a></p>
+
+<p>{{ include('back/dog/_delete_form.html.twig') }}</p><br>
+
+<a class="btn btn-warning float-end" href="{{ path('app_back_member_index') }}">Retour à la liste des membres</a>
+
+<p><a class="btn btn-warning " href="{{ path('app_back_dog_index') }}">Retour à la liste des chiens</a></p>
+
+{% endblock %}

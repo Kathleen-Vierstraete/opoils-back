@@ -1,0 +1,11 @@
+{% extends 'back/base_back.html.twig' %}
+
+{% block title %}Ajouter une nouvelle photo de {{ dog.name }}{% endblock %}
+
+{% block body %}
+    <h1>Ajouter une nouvelle photo de {{ dog.name }}</h1>
+
+    {{ include('back/picture/_form.html.twig') }}
+
+    <a class="btn btn-warning float-end" href="{{ path('app_back_picture_indexpictures', {'id': dog.id}) }}">Retour aux photos de {{ dog.name }} </a>
+{% endblock %}
